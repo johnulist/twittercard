@@ -14,8 +14,20 @@ if (!defined('_PS_VERSION_')) {
     exit;
 }
 
+/**
+ * Class TwitterCard
+ */
 class TwitterCard extends Module
 {
+    const TWITTER_NAME = 'TWITTERCARD_TWITTERNAME';
+    const HOME_PAGE_TITLE = 'TWITTERCARD_TWITTERHOMETITLE';
+    const HOME_PAGE_DESCRIPTION = 'TWITTERCARD_TWITTERHOMEDESC';
+    const HOME_PAGE_IMAGE = 'TWITTERCARD_TWITTERHOMEIMAGE';
+    const HOME_PAGE_LOGO_URL = 'TWITTERCARD_TWITTERHOMEIMAGEURL';
+
+    /**
+     * TwitterCard constructor.
+     */
     public function __construct()
     {
         parent::__construct();
@@ -23,7 +35,7 @@ class TwitterCard extends Module
         $this->name = 'twittercard';
         $this->tab = 'front_office_features';
 
-        $this->version = '1.0';
+        $this->version = '1.0.0';
         $this->author = 'StrikeHawk eCommerce, Inc.';
         $this->displayName = $this->l('Twitter Summary With Large Image Card');
         $this->description = $this->l('Adds Twitter Summary Card with large image to your site');
@@ -39,15 +51,19 @@ class TwitterCard extends Module
      */
     public function install()
     {
+        $success = parent::install();
+
+        if (!$success) {
+            parent::uninstall();
+
+            return false;
+        }
+
         $this->_clearCache('twittercard.tpl');
 
-        return (parent::install()
-            && Configuration::updateValue('twitterhandle', '')
-            && Configuration::updateValue('hometitle', '')
-            && Configuration::updateValue('homedesc', '')
-            && Configuration::updateValue('homelogo', '')
-            && Configuration::updateValue('homelogourl', '')
-            && $this->registerHook('header'));
+        $success &= $this->registerHook('header');
+
+        return $success;
     }
 
     /**
@@ -59,40 +75,13 @@ class TwitterCard extends Module
     {
         $this->_clearCache('twittercard.tpl');
 
-        return (
-            !Configuration::deleteByName('twitterhandle') ||
-            !Configuration::deleteByName('hometitle') ||
-            !Configuration::deleteByName('homedesc') ||
-            !Configuration::deleteByName('homelogo') ||
-            !Configuration::deleteByName('homelogourl') ||
-            parent::uninstall());
-    }
+        Configuration::deleteByName(self::TWITTER_NAME);
+        Configuration::deleteByName(self::HOME_PAGE_TITLE);
+        Configuration::deleteByName(self::HOME_PAGE_DESCRIPTION);
+        Configuration::deleteByName(self::HOME_PAGE_IMAGE);
+        Configuration::deleteByName(self::HOME_PAGE_LOGO_URL);
 
-    /**
-     * Get the module's configuration page
-     *
-     * @return string Configuration page HTML
-     */
-    public function getContent()
-    {
-        $html = '';
-
-        if (isset($_POST['submitModule'])) {
-            Configuration::updateValue(
-                'twitterhandle',
-                ((isset($_POST['twitterhandle']) && $_POST['twitterhandle'] != '') ? $_POST['twitterhandle'] : ''),
-                true
-            );
-            Configuration::updateValue('hometitle', Tools::getValue('hometitle'));
-            Configuration::updateValue('homedesc', Tools::getValue('homedesc'));
-            Configuration::updateValue('homelogo', Tools::getValue('homelogo'));
-            Configuration::updateValue('homelogourl', Tools::getValue('homelogourl'));
-
-            // FIXME: html not allowed here
-            $html .= '<div class="confirm" style="height:40px;padding-left:40px;line-height:40px;">'.$this->l('Configuration updated').'</div>';
-        }
-
-        return $html.$this->display(__FILE__, 'getcontent.tpl');
+        return parent::uninstall();
     }
 
     /**
@@ -103,13 +92,13 @@ class TwitterCard extends Module
      */
     public function hookHeader($params)
     {
-        // FIXME: remove old 1.4 stuff
-        global $smarty, $cookie, $link;
+        $link = $this->context->link;
+        $smarty = $this->context->smarty;
         $currentPage = get_class($this->context->controller);
         if ("ProductController" == $currentPage) {
             $cover = Product::getCover(intval(Tools::getValue('id_product')));
             $productInfo = Product::getCover(intval(Tools::getValue('id_product')));
-            $product = new Product(Tools::getValue('id_product'), false, intval($cookie->id_lang));
+            $product = new Product(Tools::getValue('id_product'), false, (int) $cookie->id_lang);
             if (is_array($cover) && sizeof($cover) == 1) {
                 $fbCover = '';
                 $protocolLink = @$_SERVER['HTTPS'] == "on" ? "https://" : "http://";
@@ -124,8 +113,6 @@ class TwitterCard extends Module
             }
         }
 
-        // FIXME: remove old 1.4 stuff
-        global $smarty;
         if ($currentPage == "ProductController") {
             $smarty->assign(
                 array(
@@ -150,5 +137,165 @@ class TwitterCard extends Module
         }
 
         return $this->display(__FILE__, 'twittercard.tpl', $this->getCacheId());
+    }
+
+    /**
+     * Get the module's configuration page
+     *
+     * @return string Configuration page HTML
+     */
+    public function getContent()
+    {
+        $output = '';
+
+        if (Tools::isSubmit('submit'.$this->name)) {
+            $output .= $this->postProcess();
+        }
+
+        return $output.$this->displayForm();
+    }
+
+    /**
+     *  Configuration Page: display form
+     */
+    public function displayForm()
+    {
+        // Get default language
+        $defaultLang = (int) Configuration::get('PS_LANG_DEFAULT');
+
+        $helper = new HelperForm();
+
+        // Module, token and currentIndex
+        $helper->module = $this;
+        $helper->name_controller = $this->name;
+        $helper->token = Tools::getAdminTokenLite('AdminModules');
+        $helper->currentIndex = AdminController::$currentIndex.'&configure='.$this->name;
+
+        // Language
+        $helper->default_form_language = $defaultLang;
+        $helper->allow_employee_form_lang = $defaultLang;
+
+        // Title and toolbar
+        $helper->title = $this->displayName;
+        $helper->show_toolbar = true;
+        $helper->toolbar_scroll = true;
+        $helper->submit_action = 'submit'.$this->name;
+        $helper->toolbar_btn = array(
+            'save' =>
+                array(
+                    'desc' => $this->l('Save'),
+                    'href' => AdminController::$currentIndex.'&configure='.$this->name.'&save'.$this->name.
+                        '&token='.Tools::getAdminTokenLite('AdminModules'),
+                ),
+                'back' => array(
+                    'href' => AdminController::$currentIndex.'&token='.Tools::getAdminTokenLite('AdminModules'),
+                     'desc' => $this->l('Back to list'),
+                ),
+            );
+        $helper->fields_value = $this->getFormValues();
+
+
+        return $helper->generateForm(array($this->getTwitterCardForm()));
+    }
+
+    /**
+     * Get the Twitter Card form
+     *
+     * @return array Form structure
+     */
+    protected function getTwitterCardForm()
+    {
+        return array(
+            'form' => array(
+                'legend' => array(
+                    'title' => $this->l('Twitter Card Configuration'),
+                    'icon' => 'icon-cogs',
+                ),
+                'description' => sprintf($this->l('You can test your Twitter Cards %shere.%s'), '<a href="https://dev.twitter.com/docs/cards/validation/validator" target="_blank">', '</a>'),
+                'input' => array(
+                    array(
+                        'type' => 'text',
+                        'label' => $this->l('Twitter name (ex. @strikehawkecomm)'),
+                        'name' => self::TWITTER_NAME,
+                        'required' => true,
+                    ),
+                    array(
+                        'type' => 'text',
+                        'label' => $this->l('Home Page Title'),
+                        'name' => self::HOME_PAGE_TITLE,
+                        'required' => true,
+                    ),
+                    array(
+                        'type' => 'textarea',
+                        'label' => $this->l('Home Page Description (limit: 200 chars)'),
+                        'name' => self::HOME_PAGE_DESCRIPTION,
+                        'required' => true,
+                    ),
+                    array(
+                        'type' => 'switch',
+                        'label' => $this->l('Home page image'),
+                        'name' => self::HOME_PAGE_IMAGE,
+                        'is_bool' => true,
+                        'values' => array(
+                            array(
+                                'id' => 'active_on',
+                                'value' => true,
+                                'label' => $this->l('Yes'),
+                            ),
+                            array(
+                                'id' => 'active_off',
+                                'value' => false,
+                                'label' => $this->l('No'),
+                            ),
+                        ),
+                    ),
+                    array(
+                        'type' => 'text',
+                        'label' => $this->l('Enter the logo URL'),
+                        'name' => self::HOME_PAGE_LOGO_URL,
+                        'required' => true,
+                    ),
+                ),
+                'submit' => array(
+                    'title' => $this->l('Save'),
+                ),
+            ),
+        );
+    }
+
+    /**
+     * Get form values
+     *
+     * @return array Form values
+     */
+    protected function getFormValues()
+    {
+        return array(
+            self::TWITTER_NAME => Configuration::get(self::TWITTER_NAME),
+            self::HOME_PAGE_TITLE => Configuration::get(self::HOME_PAGE_TITLE),
+            self::HOME_PAGE_DESCRIPTION => Configuration::get(self::HOME_PAGE_DESCRIPTION),
+            self::HOME_PAGE_IMAGE => Configuration::get(self::HOME_PAGE_IMAGE),
+            self::HOME_PAGE_LOGO_URL => Configuration::get(self::HOME_PAGE_LOGO_URL),
+        );
+    }
+
+    /**
+     * Post process configuration form
+     */
+    protected function postProcess()
+    {
+        $success = true;
+        foreach ($this->getFormValues() as $key => $value) {
+            if (Tools::isSubmit($key)) {
+                if (!Configuration::updateValue($key, Tools::getValue($key))) {
+                    $success = false;
+                }
+            }
+        }
+        if ($success) {
+            return $this->displayConfirmation($this->l('Form successfully updated'));
+        }
+
+        return $this->displayError($this->l('There was a problem while updating the configuration'));
     }
 }
