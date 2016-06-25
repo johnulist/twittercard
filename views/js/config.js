@@ -8,3 +8,20 @@
  * @license   proprietary
  * Intellectual Property of StrikeHawk eCommerce, Inc.
  */
+(function() {
+    $(document).ready(function () {
+        checkImageLogo();
+        $('#TWITTERCARD_TWITTERHOMEIMAGE_on, #TWITTERCARD_TWITTERHOMEIMAGE_off').change(function () {
+            checkImageLogo();
+        });
+    });
+
+    function checkImageLogo() {
+        if ($('#TWITTERCARD_TWITTERHOMEIMAGE_on').is(':checked')) {
+            $('#TWITTERCARD_TWITTERHOMEIMAGEURL').parent().parent().show();
+        } else {
+            $('#TWITTERCARD_TWITTERHOMEIMAGEURL').parent().parent().hide();
+        }
+    }
+})();
+

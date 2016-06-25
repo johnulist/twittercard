@@ -39,6 +39,7 @@ class TwitterCard extends Module
         $this->author = 'StrikeHawk eCommerce, Inc.';
         $this->displayName = $this->l('Twitter Summary With Large Image Card');
         $this->description = $this->l('Adds Twitter Summary Card with large image to your site');
+        $this->need_instance = 0;
 
         $this->bootstrap = true;
     }
@@ -95,14 +96,13 @@ class TwitterCard extends Module
         $link = $this->context->link;
         $smarty = $this->context->smarty;
         $cookie = $this->context->cookie;
-        $currentPage = get_class($this->context->controller);
-        if ("ProductController" == $currentPage) {
-            $cover = Product::getCover(intval(Tools::getValue('id_product')));
-            $productInfo = Product::getCover(intval(Tools::getValue('id_product')));
+
+        /** @var FrontController $currentController */
+        $currentController = get_class($this->context->controller);
+        if ('ProductController' == $currentController->php_self) {
+            $cover = Product::getCover((int) Tools::getValue('id_product'));
             $product = new Product(Tools::getValue('id_product'), false, (int) $cookie->id_lang);
             if (is_array($cover) && sizeof($cover) == 1) {
-                $fbCover = '';
-                $protocolLink = @$_SERVER['HTTPS'] == "on" ? "https://" : "http://";
                 if ($idProduct = (int) Tools::getValue('id_product')) {
                     $product = new Product($idProduct, true, $this->context->language->id, $this->context->shop->id);
                 }
@@ -112,27 +112,25 @@ class TwitterCard extends Module
                     Tools::getValue('id_product').'-'.$cover['id_image'], 'thickbox_default'
                 );
             }
-        }
 
-        if ($currentPage == "ProductController") {
             $smarty->assign(
                 array(
                     'twitter_site' => Configuration::get('twitterhandle'),
                     'twitter_product_name' => $product->name,
                     'twitter_description' => $product->description_short,
-                    'twitter_image' => $twitterImage,
-                    'twitter_image_alt' => $product->legend,
+                    'twitter_image' => isset($twitterImage) ? $twitterImage : '',
+                    'twitter_image_alt' => $product->meta_description,
                     'twitter_price' => $product->price,
                 )
             );
         } else {
             $smarty->assign(
                 array(
-                    'twitter_site' => Configuration::get('twitterhandle'),
-                    'twitter_hometitle' => Configuration::get('hometitle'),
-                    'twitter_homedesc' => Configuration::get('homedesc'),
-                    'twitter_homelogo' => Configuration::get('homelogo'),
-                    'twitter_homelogourl' => Configuration::get('homelogourl'),
+                    'twitter_site' => Configuration::get(self::TWITTER_NAME),
+                    'twitter_hometitle' => Configuration::get(self::HOME_PAGE_TITLE),
+                    'twitter_homedesc' => Configuration::get(self::HOME_PAGE_DESCRIPTION),
+                    'twitter_homelogo' => Configuration::get(self::HOME_PAGE_IMAGE),
+                    'twitter_homelogourl' => Configuration::get(self::HOME_PAGE_LOGO_URL),
                 )
             );
         }
@@ -152,6 +150,8 @@ class TwitterCard extends Module
         if (Tools::isSubmit('submit'.$this->name)) {
             $output .= $this->postProcess();
         }
+
+        $this->context->controller->addJS(_PS_MODULE_DIR_.'twittercard/views/js/config.js');
 
         return $output.$this->displayForm();
     }
