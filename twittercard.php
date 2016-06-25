@@ -94,6 +94,7 @@ class TwitterCard extends Module
     {
         $link = $this->context->link;
         $smarty = $this->context->smarty;
+        $cookie = $this->context->cookie;
         $currentPage = get_class($this->context->controller);
         if ("ProductController" == $currentPage) {
             $cover = Product::getCover(intval(Tools::getValue('id_product')));
