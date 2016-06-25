@@ -46,7 +46,7 @@ class TwitterCard extends Module
     /**
      * Install the module
      *
-     * @return bool Whether the module has been installed succesfully
+     * @return bool Whether the module has been installed successfully
      * @throws PrestaShopException
      */
     public function install()
@@ -69,7 +69,7 @@ class TwitterCard extends Module
     /**
      * Uninstall the module
      *
-     * @return bool Whether the module has been succesfully uninstalled
+     * @return bool Whether the module has been successfully uninstalled
      */
     public function uninstall()
     {
