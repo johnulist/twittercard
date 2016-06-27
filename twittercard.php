@@ -116,12 +116,12 @@ class TwitterCard extends Module
 
             $smarty->assign(
                 array(
-                    'twitter_site' => Configuration::get(self::HOME_PAGE_TITLE),
-                    'twitter_product_name' => $product->name,
-                    'twitter_description' => $product->description_short,
-                    'twitter_image' => isset($twitterImage) ? $twitterImage : '',
-                    'twitter_image_alt' => (isset($image) && !empty($image->legend)) ? $image->legend : strip_tags($product->description_short),
-                    'twitter_price' => $product->price,
+                    'twitterSite' => Configuration::get(self::HOME_PAGE_TITLE),
+                    'twitterProductName' => $product->name,
+                    'twitterDescription' => $product->description_short,
+                    'twitterImage' => isset($twitterImage) ? $twitterImage : '',
+                    'twitterImageAlt' => (isset($image) && !empty($image->legend)) ? $image->legend : strip_tags($product->description_short),
+                    'twitterPrice' => $product->price,
                 )
             );
 
@@ -129,11 +129,11 @@ class TwitterCard extends Module
         } elseif (Tools::getValue('controller') == 'index') {
             $smarty->assign(
                 array(
-                    'twitter_site' => Configuration::get(self::TWITTER_NAME),
-                    'twitter_hometitle' => Configuration::get(self::HOME_PAGE_TITLE),
-                    'twitter_homedesc' => Configuration::get(self::HOME_PAGE_DESCRIPTION),
-                    'twitter_homelogo' => Configuration::get(self::HOME_PAGE_IMAGE),
-                    'twitter_homelogourl' => Configuration::get(self::HOME_PAGE_LOGO_URL),
+                    'twitterSite' => Configuration::get(self::TWITTER_NAME),
+                    'twitterHomeTitle' => Configuration::get(self::HOME_PAGE_TITLE),
+                    'twitterHomeDescription' => Configuration::get(self::HOME_PAGE_DESCRIPTION),
+                    'twitterHomeLogo' => Configuration::get(self::HOME_PAGE_IMAGE),
+                    'twitterHomeLogoUrl' => Configuration::get(self::HOME_PAGE_LOGO_URL),
                 )
             );
 
