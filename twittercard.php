@@ -96,17 +96,12 @@ class TwitterCard extends Module
         $link = $this->context->link;
         $smarty = $this->context->smarty;
         $cookie = $this->context->cookie;
-
-        /** @var FrontController $currentController */
-        $currentController = get_class($this->context->controller);
-        if ('ProductController' == $currentController->php_self) {
+        if (Tools::getValue('controller') == 'product') {
             $cover = Product::getCover((int) Tools::getValue('id_product'));
-            $product = new Product(Tools::getValue('id_product'), false, (int) $cookie->id_lang);
+            $product = new Product(Tools::getValue('id_product'), true, (int) $this->context->language->id);
             if (is_array($cover) && sizeof($cover) == 1) {
-                if ($idProduct = (int) Tools::getValue('id_product')) {
-                    $product = new Product($idProduct, true, $this->context->language->id, $this->context->shop->id);
-                }
-
+                /** @var Image $image */
+                $image = Image::getCover((int) $product->id);
                 $twitterImage = $link->getImageLink(
                     $product->link_rewrite[$cookie->id_lang],
                     Tools::getValue('id_product').'-'.$cover['id_image'], 'thickbox_default'
@@ -115,15 +110,17 @@ class TwitterCard extends Module
 
             $smarty->assign(
                 array(
-                    'twitter_site' => Configuration::get('twitterhandle'),
+                    'twitter_site' => Configuration::get(self::HOME_PAGE_TITLE),
                     'twitter_product_name' => $product->name,
                     'twitter_description' => $product->description_short,
                     'twitter_image' => isset($twitterImage) ? $twitterImage : '',
-                    'twitter_image_alt' => $product->meta_description,
+                    'twitter_image_alt' => (isset($image) && !empty($image->legend)) ? $image->legend : strip_tags($product->description_short),
                     'twitter_price' => $product->price,
                 )
             );
-        } else {
+
+            return $this->display(__FILE__, 'twittercard_product.tpl');
+        } elseif (Tools::getValue('controller') == 'index') {
             $smarty->assign(
                 array(
                     'twitter_site' => Configuration::get(self::TWITTER_NAME),
@@ -133,9 +130,11 @@ class TwitterCard extends Module
                     'twitter_homelogourl' => Configuration::get(self::HOME_PAGE_LOGO_URL),
                 )
             );
+
+            return $this->display(__FILE__, 'twittercard_index.tpl');
         }
 
-        return $this->display(__FILE__, 'twittercard.tpl', $this->getCacheId());
+        return '';
     }
 
     /**
