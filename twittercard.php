@@ -25,6 +25,12 @@ class TwitterCard extends Module
     const HOME_PAGE_IMAGE = 'TWITTERCARD_TWITTERHOMEIMAGE';
     const HOME_PAGE_LOGO_URL = 'TWITTERCARD_TWITTERHOMEIMAGEURL';
 
+    const MENU_SETTINGS = 1;
+    const MENU_INFO = 2;
+
+    public $menu;
+    public $moduleUrl;
+
     /**
      * TwitterCard constructor.
      */
@@ -144,13 +150,35 @@ class TwitterCard extends Module
      */
     public function getContent()
     {
+        $this->moduleUrl = Context::getContext()->link->getAdminLink('AdminModules', false).'&token='.Tools::getAdminTokenLite('AdminModules').'&'.http_build_query(array('configure' => $this->name));
+        $this->context->smarty->assign(array(
+            'displayName' => $this->displayName,
+            'moduleUrl' => $this->moduleUrl,
+            'menuTabs' => $this->initNavigation()
+        ));
+
         $output = '';
 
         if (Tools::isSubmit('submit'.$this->name)) {
             $output .= $this->postProcess();
         }
 
+        $output .= $this->display(__FILE__, 'views/templates/admin/navbar.tpl');
+
         $this->context->controller->addJS(_PS_MODULE_DIR_.'twittercard/views/js/config.js');
+
+        if (version_compare(_PS_VERSION_, '1.6.0.0', '>=')) {
+            switch (Tools::getValue('menu')) {
+                case self::MENU_INFO:
+                    $this->menu = self::MENU_INFO;
+                    return $output.$this->display(__FILE__, 'views/templates/admin/info.tpl');
+                    break;
+                default:
+                    $this->menu = self::MENU_SETTINGS;
+                    return $output.$this->displayForm();
+                    break;
+            }
+        }
 
         return $output.$this->displayForm();
     }
@@ -277,6 +305,44 @@ class TwitterCard extends Module
             self::HOME_PAGE_IMAGE => Configuration::get(self::HOME_PAGE_IMAGE),
             self::HOME_PAGE_LOGO_URL => Configuration::get(self::HOME_PAGE_LOGO_URL),
         );
+    }
+
+    /**
+     * Initialize navigation
+     *
+     * @return array Menu items
+     */
+    protected function initNavigation()
+    {
+        $menu = array(
+            'settings' => array(
+                'short' => $this->l('Settings'),
+                'desc' => $this->l('Module settings'),
+                'href' => $this->moduleUrl.'&menu='.self::MENU_SETTINGS,
+                'active' => false,
+                'icon' => 'icon-gears'
+            ),
+            'info' => array(
+                'short' => $this->l('Information'),
+                'desc' => $this->l('Information'),
+                'href' => $this->moduleUrl.'&menu='.self::MENU_INFO,
+                'active' => false,
+                'icon' => 'icon-question'
+            ),
+        );
+
+        switch (Tools::getValue('menu')) {
+            case self::MENU_INFO:
+                $this->menu = self::MENU_INFO;
+                $menu['info']['active'] = true;
+                break;
+            default:
+                $this->menu = self::MENU_SETTINGS;
+                $menu['settings']['active'] = true;
+                break;
+        }
+
+        return $menu;
     }
 
     /**

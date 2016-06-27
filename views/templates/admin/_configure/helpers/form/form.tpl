@@ -11,7 +11,7 @@
 {extends file="helpers/form/form.tpl"}
 
 {block name="input"}
-	{if $input.type == 'switch' && $smarty.const._PS_VERSION_|@addcslashes:'\'' < '1.6'}*}
+	{if $input.type == 'switch' && $smarty.const._PS_VERSION_|@addcslashes:'\'' < '1.6'}
 			<input type="radio" name="{$input.name|escape:'htmlall':'UTF-8'}"
 				   id="{$input.name|escape:'htmlall':'UTF-8'}_on"
 				   value="1"
