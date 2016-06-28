@@ -25,6 +25,7 @@ class TwitterCard extends Module
     const HOME_PAGE_IMAGE = 'TWITTERCARD_TWITTERHOMEIMAGE';
     const HOME_PAGE_LOGO_URL = 'TWITTERCARD_TWITTERHOMEIMAGEURL';
 
+    // In order to add a new tab: define a new menu constant here and assign a unique positive number
     const MENU_SETTINGS = 1;
     const MENU_INFO = 2;
 
@@ -169,6 +170,12 @@ class TwitterCard extends Module
 
         $this->context->controller->addJS(_PS_MODULE_DIR_.'twittercard/views/js/config.js');
 
+        // When version is 1.6 or higher, this switch defines what page should be shown
+        // To just add a new template to a menu item, use the following template and add it to the top:
+        // case self::{{menu constant}}:
+        // $this->menu = self::{{menu constant}};
+        // return $output.$this->display(__FILE__, 'views/templates/admin/{{menu template}}.tpl');
+        // break;
         if (version_compare(_PS_VERSION_, '1.6.0.0', '>=')) {
             switch (Tools::getValue('menu')) {
                 case self::MENU_INFO:
@@ -316,6 +323,17 @@ class TwitterCard extends Module
      */
     protected function initNavigation()
     {
+        /*
+         * This array defines the menu items
+         * In order to add a new menu, you will have to add a new sub array:
+         * array(
+         *     'short' => $this->l('{{menu display name}}'),
+         *     'desc' => $this->l('{{menu description}}'),
+         *     'href' => $this->moduleUrl.'&menu='.self::{{menu constant name}},
+         *     'active' => false,
+         *     'icon' => '{{menu icon}}'
+         *   )
+         */
         $menu = array(
             'settings' => array(
                 'short' => $this->l('Settings'),
@@ -333,6 +351,14 @@ class TwitterCard extends Module
             ),
         );
 
+        /*
+         * This helps making the right tab active
+         * When adding a new tab, use the following template and add it to the top of the switch:
+         * case {{menu constant name}}:
+         *     $this->menu = self::{{menu constant name}};
+         *     $menu['{{menu name}}']['active'] = true;
+         *     break;
+         */
         switch (Tools::getValue('menu')) {
             case self::MENU_INFO:
                 $this->menu = self::MENU_INFO;
