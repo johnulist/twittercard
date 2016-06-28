@@ -24,6 +24,7 @@ class TwitterCard extends Module
     const HOME_PAGE_DESCRIPTION = 'TWITTERCARD_TWITTERHOMEDESC';
     const HOME_PAGE_IMAGE = 'TWITTERCARD_TWITTERHOMEIMAGE';
     const HOME_PAGE_LOGO_URL = 'TWITTERCARD_TWITTERHOMEIMAGEURL';
+    const REGENERATE_IMAGES = 'TWITTERCARD_REGENERATE_IMAGES';
 
     // In order to add a new tab: define a new menu constant here and assign a unique positive number
     const MENU_SETTINGS = 1;
@@ -66,6 +67,8 @@ class TwitterCard extends Module
 
             return false;
         }
+
+        $success &= $this->installImageType();
 
         $this->_clearCache('twittercard.tpl');
 
@@ -232,7 +235,7 @@ class TwitterCard extends Module
         $helper->fields_value = $this->getFormValues();
 
 
-        return $helper->generateForm(array($this->getTwitterCardForm()));
+        return $helper->generateForm(array($this->getTwitterCardForm(), $this->getRegenerateForm()));
     }
 
     /**
@@ -301,6 +304,48 @@ class TwitterCard extends Module
     }
 
     /**
+     * Get regenerate form
+     *
+     * @return array Form structure
+     */
+    protected function getRegenerateForm()
+    {
+        return array(
+            'form' => array(
+                'legend' => array(
+                    'title' => $this->l('Regenerate product images'),
+                    'icon' => 'icon-cogs',
+                ),
+                'description' => $this->l('After installing this module, a new image type has been defined (twitter_default) in order to fit images in the Twitter Card. In order to show already existing product images in the Twitter Card they will have to be regenerated first. You can do that with this option.'),
+                'input' => array(
+                    array(
+                        'type' => 'switch',
+                        'label' => $this->l('I would like to regenerate product images'),
+                        'name' => self::REGENERATE_IMAGES,
+                        'is_bool' => true,
+                        'values' => array(
+                            array(
+                                'id' => 'active_on',
+                                'value' => true,
+                                'label' => $this->l('Yes'),
+                            ),
+                            array(
+                                'id' => 'active_off',
+                                'value' => false,
+                                'label' => $this->l('No'),
+                            ),
+                        ),
+                    ),
+                ),
+                'submit' => array(
+                    'title' => $this->l('Regenerate'),
+                    'icon' => 'process-icon-cogs'
+                ),
+            ),
+        );
+    }
+
+    /**
      * Get form values
      *
      * @return array Form values
@@ -314,6 +359,30 @@ class TwitterCard extends Module
             self::HOME_PAGE_IMAGE => Configuration::get(self::HOME_PAGE_IMAGE),
             self::HOME_PAGE_LOGO_URL => Configuration::get(self::HOME_PAGE_LOGO_URL),
         );
+    }
+
+    /**
+     * Install Twitter image type
+     * Dimension: 440px x 220px
+     */
+    protected function installImageType()
+    {
+        if (!ImageType::typeAlreadyExists('twitter_default')) {
+            $imageType = new ImageType();
+            $imageType->name = 'twitter_default';
+            $imageType->width = 440;
+            $imageType->height = 220;
+            $imageType->products = true;
+            $imageType->categories = false;
+            $imageType->manufacturers = false;
+            $imageType->suppliers = false;
+            $imageType->scenes = false;
+            $imageType->stores = false;
+
+            return $imageType->add();
+        }
+
+        return true;
     }
 
     /**
@@ -386,10 +455,82 @@ class TwitterCard extends Module
                 }
             }
         }
+        if (Tools::getValue(self::REGENERATE_IMAGES)) {
+            $this->regenerateThumbnails('twitter_default', true);
+        }
+
         if ($success) {
             return $this->displayConfirmation($this->l('Form successfully updated'));
         }
 
         return $this->displayError($this->l('There was a problem while updating the configuration'));
+    }
+
+    /**
+     * Regenerate thumbnails
+     *
+     * @param string $type            Image type
+     * @param bool   $deleteOldImages Delete old images first
+     * @return bool Whether images have been regenerated successfully
+     */
+    protected function regenerateThumbnails($type = 'all', $deleteOldImages = false)
+    {
+        $this->start_time = time();
+        ini_set('max_execution_time', $this->max_execution_time); // ini_set may be disabled, we need the real value
+        $this->max_execution_time = (int)ini_get('max_execution_time');
+        ignore_user_abort(true);
+        $languages = Language::getLanguages(false);
+
+        $process = array(
+            array('type' => 'categories', 'dir' => _PS_CAT_IMG_DIR_),
+            array('type' => 'manufacturers', 'dir' => _PS_MANU_IMG_DIR_),
+            array('type' => 'suppliers', 'dir' => _PS_SUPP_IMG_DIR_),
+            array('type' => 'scenes', 'dir' => _PS_SCENE_IMG_DIR_),
+            array('type' => 'products', 'dir' => _PS_PROD_IMG_DIR_),
+            array('type' => 'stores', 'dir' => _PS_STORE_IMG_DIR_)
+        );
+
+        // Launching generation process
+        foreach ($process as $proc) {
+            if ($type != 'all' && $type != $proc['type']) {
+                continue;
+            }
+
+            // Getting format generation
+            $formats = ImageType::getImagesTypes($proc['type']);
+            if ($type != 'all') {
+                $format = strval(Tools::getValue('format_'.$type));
+                if ($format != 'all') {
+                    foreach ($formats as $k => $form) {
+                        if ($form['id_image_type'] != $format) {
+                            unset($formats[$k]);
+                        }
+                    }
+                }
+            }
+
+            if ($deleteOldImages) {
+                $this->_deleteOldImages($proc['dir'], $formats, ($proc['type'] == 'products' ? true : false));
+            }
+            if (($return = $this->_regenerateNewImages($proc['dir'], $formats, ($proc['type'] == 'products' ? true : false))) === true) {
+                if (!count($this->errors)) {
+                    $this->errors[] = sprintf(Tools::displayError('Cannot write images for this type: %s. Please check the %s folder\'s writing permissions.'), $proc['type'], $proc['dir']);
+                }
+            } elseif ($return == 'timeout') {
+                $this->errors[] = Tools::displayError('Only part of the images have been regenerated. The server timed out before finishing.');
+            } else {
+                if ($proc['type'] == 'products') {
+                    if ($this->_regenerateWatermark($proc['dir'], $formats) == 'timeout') {
+                        $this->errors[] = Tools::displayError('Server timed out. The watermark may not have been applied to all images.');
+                    }
+                }
+                if (!count($this->errors)) {
+                    if ($this->_regenerateNoPictureImages($proc['dir'], $formats, $languages)) {
+                        $this->errors[] = sprintf(Tools::displayError('Cannot write "No picture" image to (%s) images folder. Please check the folder\'s writing permissions.'), $proc['type']);
+                    }
+                }
+            }
+        }
+        return (count($this->errors) > 0 ? false : true);
     }
 }
