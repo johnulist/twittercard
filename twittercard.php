@@ -92,6 +92,8 @@ class TwitterCard extends Module
         Configuration::deleteByName(self::HOME_PAGE_IMAGE);
         Configuration::deleteByName(self::HOME_PAGE_LOGO_URL);
 
+        $this->uninstallImageType();
+
         return parent::uninstall();
     }
 
@@ -380,6 +382,28 @@ class TwitterCard extends Module
             $imageType->stores = false;
 
             return $imageType->add();
+        }
+
+        return true;
+    }
+
+    /**
+     * Uninstall Twitter image type
+     * Dimension: 440px x 220px
+     */
+    protected function uninstallImageType()
+    {
+        if (ImageType::typeAlreadyExists('twitter_default')) {
+            $sql = new DbQuery();
+            $sql->select('it.`id_image_type`');
+            $sql->from('image_type', 'it');
+            $sql->where('it.`name` = \'twitter_default\'');
+
+            $imageType = new ImageType((int) Db::getInstance(_PS_USE_SQL_SLAVE_)->getValue($sql));
+
+            if (Validate::isLoadedObject($imageType)) {
+                return $imageType->delete();
+            }
         }
 
         return true;
