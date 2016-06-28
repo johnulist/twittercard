@@ -19,7 +19,7 @@ if (!defined('_PS_VERSION_')) {
  */
 class TwitterCard extends Module
 {
-    const TWITTER_NAME = 'TWITTERCARD_TWITTERNAME';
+    const TWITTER_USER = 'TWITTERCARD_TWITTERNAME';
     const HOME_PAGE_TITLE = 'TWITTERCARD_TWITTERHOMETITLE';
     const HOME_PAGE_DESCRIPTION = 'TWITTERCARD_TWITTERHOMEDESC';
     const HOME_PAGE_IMAGE = 'TWITTERCARD_TWITTERHOMEIMAGE';
@@ -82,7 +82,7 @@ class TwitterCard extends Module
     {
         $this->_clearCache('twittercard.tpl');
 
-        Configuration::deleteByName(self::TWITTER_NAME);
+        Configuration::deleteByName(self::TWITTER_USER);
         Configuration::deleteByName(self::HOME_PAGE_TITLE);
         Configuration::deleteByName(self::HOME_PAGE_DESCRIPTION);
         Configuration::deleteByName(self::HOME_PAGE_IMAGE);
@@ -110,13 +110,14 @@ class TwitterCard extends Module
                 $image = Image::getCover((int) $product->id);
                 $twitterImage = $link->getImageLink(
                     $product->link_rewrite[$cookie->id_lang],
-                    Tools::getValue('id_product').'-'.$cover['id_image'], 'thickbox_default'
+                    Tools::getValue('id_product').'-'.$cover['id_image'], 'large_default'
                 );
             }
 
             $smarty->assign(
                 array(
-                    'twitterSite' => Configuration::get(self::HOME_PAGE_TITLE),
+                    'twitterUser' => Configuration::get(self::TWITTER_USER),
+                    'twitterSite' => Configuration::get(self::TWITTER_USER),
                     'twitterProductName' => $product->name,
                     'twitterDescription' => $product->description_short,
                     'twitterImage' => isset($twitterImage) ? $twitterImage : '',
@@ -129,7 +130,8 @@ class TwitterCard extends Module
         } elseif (Tools::getValue('controller') == 'index') {
             $smarty->assign(
                 array(
-                    'twitterSite' => Configuration::get(self::TWITTER_NAME),
+                    'twitterUser' => Configuration::get(self::TWITTER_USER),
+                    'twitterSite' => Configuration::get(self::TWITTER_USER),
                     'twitterHomeTitle' => Configuration::get(self::HOME_PAGE_TITLE),
                     'twitterHomeDescription' => Configuration::get(self::HOME_PAGE_DESCRIPTION),
                     'twitterHomeLogo' => Configuration::get(self::HOME_PAGE_IMAGE),
@@ -244,7 +246,7 @@ class TwitterCard extends Module
                     array(
                         'type' => 'text',
                         'label' => $this->l('Twitter name (ex. @strikehawkecomm)'),
-                        'name' => self::TWITTER_NAME,
+                        'name' => self::TWITTER_USER,
                         'required' => true,
                     ),
                     array(
@@ -299,7 +301,7 @@ class TwitterCard extends Module
     protected function getFormValues()
     {
         return array(
-            self::TWITTER_NAME => Configuration::get(self::TWITTER_NAME),
+            self::TWITTER_USER => Configuration::get(self::TWITTER_USER),
             self::HOME_PAGE_TITLE => Configuration::get(self::HOME_PAGE_TITLE),
             self::HOME_PAGE_DESCRIPTION => Configuration::get(self::HOME_PAGE_DESCRIPTION),
             self::HOME_PAGE_IMAGE => Configuration::get(self::HOME_PAGE_IMAGE),

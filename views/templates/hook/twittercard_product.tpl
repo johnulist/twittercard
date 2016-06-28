@@ -1,7 +1,7 @@
 <!-- twitter card module -->
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:site" content="{$twitterSite}">
-<meta name="twitter:creator" content="{$twitterSite}">
+<meta name="twitter:site" content="{$twitterUser}">
+<meta name="twitter:creator" content="{$twitterUser}">
 <meta name="twitter:title" content="{$twitterProductName|escape:'html':'UTF-8'} - {convertPrice price=$twitterPrice|floatval}">
 <meta name="twitter:description" content="{$twitterDescription|strip_tags:'UTF-8'}">
 <meta name="twitter:image" content="{$twitterImage}">
