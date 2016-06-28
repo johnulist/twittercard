@@ -38,21 +38,22 @@ class TwitterCard extends Module
      */
     public function __construct()
     {
-        parent::__construct();
-
         $this->name = 'twittercard';
-        $this->tab = 'front_office_features';
-
+        $this->tab = 'administration';
         $this->version = '1.0.0';
         $this->author = 'StrikeHawk eCommerce, Inc.';
-        $this->displayName = $this->l('Twitter Summary With Large Image Card');
-        $this->description = $this->l('Adds Twitter Summary Card with large image to your site');
-        $this->need_instance = 0;
+        $this->need_instance = 1;
 
         $this->bootstrap = true;
+
+        parent::__construct();
+
+        $this->displayName = $this->l('Twitter Summary With Large Image Card');
+        $this->description = $this->l('Adds Twitter Summary Card with large image to your site');
     }
 
-    /**
+
+        /**
      * Install the module
      *
      * @return bool Whether the module has been installed successfully
@@ -73,6 +74,7 @@ class TwitterCard extends Module
         $this->_clearCache('twittercard.tpl');
 
         $success &= $this->registerHook('header');
+        $success &= $this->registerHook('displayBackOfficeHeader');
 
         return $success;
     }
@@ -152,6 +154,23 @@ class TwitterCard extends Module
     }
 
     /**
+     * Hook to the BO pages' <HEAD></HEAD> tags
+     *
+     * @param array $params Hook parameters
+     * @return string Hook HTML
+     */
+    public function hookDisplayBackOfficeHeader()
+    {
+        if (Tools::getValue('controller') == 'AdminModules' && Tools::getValue('configure') == 'twittercard') {
+            if (version_compare(_PS_VERSION_, '1.6.0.0', '>=')) {
+                $this->context->controller->addJs($this->_path.'views/js/config.js');
+            } else {
+                $this->context->controller->addJs($this->_path.'views/js/config_15.js');
+            }
+        }
+    }
+
+    /**
      * Get the module's configuration page
      *
      * @return string Configuration page HTML
@@ -171,10 +190,6 @@ class TwitterCard extends Module
             $output .= $this->postProcess();
         }
 
-        $output .= $this->display(__FILE__, 'views/templates/admin/navbar.tpl');
-
-        $this->context->controller->addJS(_PS_MODULE_DIR_.'twittercard/views/js/config.js');
-
         // When version is 1.6 or higher, this switch defines what page should be shown
         // To just add a new template to a menu item, use the following template and add it to the top:
         // case self::{{menu constant}}:
@@ -182,16 +197,22 @@ class TwitterCard extends Module
         // return $output.$this->display(__FILE__, 'views/templates/admin/{{menu template}}.tpl');
         // break;
         if (version_compare(_PS_VERSION_, '1.6.0.0', '>=')) {
+            $output .= $this->display(__FILE__, 'views/templates/admin/navbar.tpl');
+
             switch (Tools::getValue('menu')) {
                 case self::MENU_INFO:
                     $this->menu = self::MENU_INFO;
+
                     return $output.$this->display(__FILE__, 'views/templates/admin/info.tpl');
                     break;
                 default:
                     $this->menu = self::MENU_SETTINGS;
+
                     return $output.$this->displayForm();
                     break;
             }
+        } else {
+            $output .= $this->display(__FILE__, 'views/templates/admin/info.tpl');
         }
 
         return $output.$this->displayForm();
@@ -219,8 +240,8 @@ class TwitterCard extends Module
 
         // Title and toolbar
         $helper->title = $this->displayName;
-        $helper->show_toolbar = true;
-        $helper->toolbar_scroll = true;
+        $helper->show_toolbar = false;
+        $helper->toolbar_scroll = false;
         $helper->submit_action = 'submit'.$this->name;
         $helper->toolbar_btn = array(
             'save' =>
