@@ -8,7 +8,7 @@
  * @license   proprietary
  * Intellectual Property of StrikeHawk eCommerce, Inc.
 *}
-{if $input.type == 'switch' && $smarty.const._PS_VERSION_|@addcslashes:'\'' < '1.6'}
+{if $smarty.const._PS_VERSION_|@addcslashes:'\'' < '1.6'}
 	<fieldset>
 		<legend>
 			{l s='Twitter cards' mod='twittercard'}
