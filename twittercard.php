@@ -142,7 +142,7 @@ class TwitterCard extends Module
                     'twitterSite' => Configuration::get(self::TWITTER_USER),
                     'twitterHomeTitle' => Configuration::get(self::HOME_PAGE_TITLE),
                     'twitterHomeDescription' => Configuration::get(self::HOME_PAGE_DESCRIPTION),
-                    'twitterHomeLogo' => Configuration::get(self::HOME_PAGE_IMAGE),
+                    'twitterHomeLogo' => (bool) Configuration::get(self::HOME_PAGE_IMAGE),
                     'twitterHomeLogoUrl' => Configuration::get(self::HOME_PAGE_LOGO_URL),
                 )
             );
