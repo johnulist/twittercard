@@ -41,7 +41,7 @@ class TwitterCard extends Module
     {
         $this->name = 'twittercard';
         $this->tab = 'front_office_features';
-        $this->version = '1.0.3';
+        $this->version = '1.0.4';
         $this->author = 'StrikeHawk eCommerce, Inc.';
         $this->need_instance = 0;
 
@@ -165,7 +165,13 @@ class TwitterCard extends Module
      */
     public function getContent()
     {
-        $this->moduleUrl = Context::getContext()->link->getAdminLink('AdminModules', false).'&token='.Tools::getAdminTokenLite('AdminModules').'&'.http_build_query(array('configure' => $this->name));
+        $this->moduleUrl = Context::getContext()->link->getAdminLink('AdminModules', true).'&'.http_build_query(
+            array(
+                'configure' => $this->name,
+                'module_name' => $this->name,
+                'tab_module' => $this->tab,
+            )
+        );
         $this->context->smarty->assign(array(
             'displayName' => $this->displayName,
             'moduleUrl' => $this->moduleUrl,
