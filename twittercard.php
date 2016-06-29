@@ -41,7 +41,7 @@ class TwitterCard extends Module
     {
         $this->name = 'twittercard';
         $this->tab = 'front_office_features';
-        $this->version = '1.0.2';
+        $this->version = '1.0.3';
         $this->author = 'StrikeHawk eCommerce, Inc.';
         $this->need_instance = 0;
 
@@ -105,7 +105,9 @@ class TwitterCard extends Module
                 $image = Image::getCover((int) $product->id);
                 $twitterImage = $link->getImageLink(
                     $product->link_rewrite[$cookie->id_lang],
-                    Tools::getValue('id_product').'-'.$cover['id_image'], 'twitter_default');
+                    Tools::getValue('id_product').'-'.$cover['id_image'],
+                    'twitter_default'
+                );
             }
 
             $smarty->assign(
@@ -190,12 +192,10 @@ class TwitterCard extends Module
                     $this->menu = self::MENU_INFO;
 
                     return $output.$this->display(__FILE__, 'views/templates/admin/info.tpl');
-                    break;
                 default:
                     $this->menu = self::MENU_SETTINGS;
 
                     return $output.$this->displayForm();
-                    break;
             }
         } else {
             $output .= $this->display(__FILE__, 'views/templates/admin/info.tpl');
@@ -531,7 +531,7 @@ class TwitterCard extends Module
             // Getting format generation
             $formats = ImageType::getImagesTypes($proc['type']);
             if ($type != 'all') {
-                $format = strval(Tools::getValue('format_'.$type));
+                $format = (string) Tools::getValue('format_'.$type);
                 if ($format != 'all') {
                     foreach ($formats as $k => $form) {
                         if ($form['id_image_type'] != $format) {

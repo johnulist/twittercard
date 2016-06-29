@@ -14,7 +14,7 @@
 			{l s='Twitter cards' mod='twittercard'}
 		</legend>
 		<p>
-			{l s='Module info'}
+			{l s='Module info' mod='twittercard'}
 			<br>
 		</p>
 	</fieldset>
