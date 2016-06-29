@@ -2,7 +2,7 @@
 <module>
   <name>twittercard</name>
   <displayName><![CDATA[Twitter Summary With Large Image Card]]></displayName>
-  <version><![CDATA[1.0.3]]></version>
+  <version><![CDATA[1.0.4]]></version>
   <description><![CDATA[Adds Twitter Summary Card with large image to your site]]></description>
   <author><![CDATA[StrikeHawk eCommerce, Inc.]]></author>
   <tab><![CDATA[front_office_features]]></tab>
