@@ -25,6 +25,7 @@ class TwitterCard extends Module
     const HOME_PAGE_IMAGE = 'TWITTERCARD_TWITTERHOMEIMAGE';
     const HOME_PAGE_LOGO_URL = 'TWITTERCARD_TWITTERHOMEIMAGEURL';
     const REGENERATE_IMAGES = 'TWITTERCARD_REGENERATE_IMAGES';
+    const MAX_EXECUTION_TIME = 7200;
 
     // In order to add a new tab: define a new menu constant here and assign a unique positive number
     const MENU_SETTINGS = 1;
@@ -40,7 +41,7 @@ class TwitterCard extends Module
     {
         $this->name = 'twittercard';
         $this->tab = 'front_office_features';
-        $this->version = '1.0.1';
+        $this->version = '1.0.2';
         $this->author = 'StrikeHawk eCommerce, Inc.';
         $this->need_instance = 0;
 
@@ -53,7 +54,7 @@ class TwitterCard extends Module
     }
 
 
-        /**
+    /**
      * Install the module
      *
      * @return bool Whether the module has been installed successfully
@@ -61,22 +62,10 @@ class TwitterCard extends Module
      */
     public function install()
     {
-        $success = parent::install();
-
-        if (!$success) {
-            parent::uninstall();
-
-            return false;
-        }
-
-        $success &= $this->installImageType();
-
-        $this->_clearCache('twittercard.tpl');
-
-        $success &= $this->registerHook('header');
-        $success &= $this->registerHook('backOfficeHeader');
-
-        return $success;
+        return parent::install() &&
+            $this->installImageType() &&
+            $this->registerHook('header') &&
+            $this->registerHook('backOfficeHeader');
     }
 
     /**
@@ -86,8 +75,6 @@ class TwitterCard extends Module
      */
     public function uninstall()
     {
-        $this->_clearCache('twittercard.tpl');
-
         Configuration::deleteByName(self::TWITTER_USER);
         Configuration::deleteByName(self::HOME_PAGE_TITLE);
         Configuration::deleteByName(self::HOME_PAGE_DESCRIPTION);
@@ -118,8 +105,7 @@ class TwitterCard extends Module
                 $image = Image::getCover((int) $product->id);
                 $twitterImage = $link->getImageLink(
                     $product->link_rewrite[$cookie->id_lang],
-                    Tools::getValue('id_product').'-'.$cover['id_image'], 'large_default'
-                );
+                    Tools::getValue('id_product').'-'.$cover['id_image'], 'twitter_default');
             }
 
             $smarty->assign(
@@ -381,6 +367,7 @@ class TwitterCard extends Module
             self::HOME_PAGE_DESCRIPTION => Configuration::get(self::HOME_PAGE_DESCRIPTION),
             self::HOME_PAGE_IMAGE => Configuration::get(self::HOME_PAGE_IMAGE),
             self::HOME_PAGE_LOGO_URL => Configuration::get(self::HOME_PAGE_LOGO_URL),
+            self::REGENERATE_IMAGES => false,
         );
     }
 
@@ -521,7 +508,7 @@ class TwitterCard extends Module
     protected function regenerateThumbnails($type = 'all', $deleteOldImages = false)
     {
         $this->start_time = time();
-        ini_set('max_execution_time', $this->max_execution_time); // ini_set may be disabled, we need the real value
+        ini_set('max_execution_time', self::MAX_EXECUTION_TIME); // ini_set may be disabled, we need the real value
         $this->max_execution_time = (int)ini_get('max_execution_time');
         ignore_user_abort(true);
         $languages = Language::getLanguages(false);
@@ -576,6 +563,7 @@ class TwitterCard extends Module
                 }
             }
         }
+
         return (count($this->errors) > 0 ? false : true);
     }
 }
