@@ -149,6 +149,7 @@ class TwitterCard extends Module
      */
     public function hookBackOfficeHeader()
     {
+        $this->context->controller->addJquery();
         if (Tools::getValue('configure') == $this->name || Tools::getValue('module_name') == $this->name) {
             if (version_compare(_PS_VERSION_, '1.6.0.0', '>=')) {
                 $this->context->controller->addJS($this->_path.'views/js/v1-config.js');
