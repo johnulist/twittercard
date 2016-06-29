@@ -39,10 +39,10 @@ class TwitterCard extends Module
     public function __construct()
     {
         $this->name = 'twittercard';
-        $this->tab = 'administration';
-        $this->version = '1.0.0';
+        $this->tab = 'front_office_features';
+        $this->version = '1.0.1';
         $this->author = 'StrikeHawk eCommerce, Inc.';
-        $this->need_instance = 1;
+        $this->need_instance = 0;
 
         $this->bootstrap = true;
 
@@ -74,7 +74,7 @@ class TwitterCard extends Module
         $this->_clearCache('twittercard.tpl');
 
         $success &= $this->registerHook('header');
-        $success &= $this->registerHook('displayBackOfficeHeader');
+        $success &= $this->registerHook('backOfficeHeader');
 
         return $success;
     }
@@ -159,13 +159,13 @@ class TwitterCard extends Module
      * @param array $params Hook parameters
      * @return string Hook HTML
      */
-    public function hookDisplayBackOfficeHeader()
+    public function hookBackOfficeHeader()
     {
-        if (Tools::getValue('controller') == 'AdminModules' && Tools::getValue('configure') == 'twittercard') {
+        if (Tools::getValue('module_name') == $this->name) {
             if (version_compare(_PS_VERSION_, '1.6.0.0', '>=')) {
-                $this->context->controller->addJs($this->_path.'views/js/config.js');
+                $this->context->controller->addJS($this->_path.'views/js/v1-config.js');
             } else {
-                $this->context->controller->addJs($this->_path.'views/js/config_15.js');
+                $this->context->controller->addJS($this->_path.'views/js/v1-config_15.js');
             }
         }
     }
