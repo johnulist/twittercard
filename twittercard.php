@@ -41,7 +41,7 @@ class TwitterCard extends Module
     {
         $this->name = 'twittercard';
         $this->tab = 'front_office_features';
-        $this->version = '1.0.4';
+        $this->version = '1.0.5';
         $this->author = 'StrikeHawk eCommerce, Inc.';
         $this->need_instance = 0;
 
@@ -149,7 +149,7 @@ class TwitterCard extends Module
      */
     public function hookBackOfficeHeader()
     {
-        if (Tools::getValue('module_name') == $this->name) {
+        if (Tools::getValue('configure') == $this->name || Tools::getValue('module_name') == $this->name) {
             if (version_compare(_PS_VERSION_, '1.6.0.0', '>=')) {
                 $this->context->controller->addJS($this->_path.'views/js/v1-config.js');
             } else {

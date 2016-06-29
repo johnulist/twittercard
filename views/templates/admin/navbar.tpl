@@ -1,12 +1,12 @@
 {*
- * Copyright (C) Mijn Presta - All Rights Reserved
+ * Copyright (C) StrikeHawk eCommerce, Inc. - All Rights Reserved
  *
  * Unauthorized copying of this file, via any medium is strictly prohibited
  *
- * @author    Michael Dekker <prestashopaddons@mijnpresta.nl>
- * @copyright 2015-2016 Mijn Presta
+ * @author    StrikeHawk eCommerce, Inc. <sales@services.strikehawk.com>
+ * @copyright 2016 StrikeHawk eCommerce, Inc.
  * @license   proprietary
- * Intellectual Property of Mijn Presta
+ * Intellectual Property of StrikeHawk eCommerce, Inc.
 *}
 <nav class="navbar navbar-default" role="navigation">
 	<ul class="nav navbar-nav">

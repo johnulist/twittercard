@@ -1,13 +1,13 @@
 {*
- * Copyright (C) Mijn Presta - All Rights Reserved
+ * Copyright (C) StrikeHawk eCommerce, Inc. - All Rights Reserved
  *
  * Unauthorized copying of this file, via any medium is strictly prohibited
  *
- * @author    Michael Dekker <prestashopaddons@mijnpresta.nl>
- * @copyright 2015-2016 Mijn Presta
+ * @author    StrikeHawk eCommerce, Inc. <sales@services.strikehawk.com>
+ * @copyright 2016 StrikeHawk eCommerce, Inc.
  * @license   proprietary
- * Intellectual Property of Mijn Presta
-*}s
+ * Intellectual Property of StrikeHawk eCommerce, Inc.
+*}
 <!-- twitter card module -->
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:site" content="{$twitterUser|escape:'htmlall':'UTF-8'}">
