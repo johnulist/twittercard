@@ -451,8 +451,8 @@ class TwitterCard extends Module
                 'icon' => 'icon-gears'
             ),
             'info' => array(
-                'short' => $this->l('Information'),
-                'desc' => $this->l('Information'),
+                'short' => $this->l('Help'),
+                'desc' => $this->l('Help'),
                 'href' => $this->moduleUrl.'&menu='.self::MENU_INFO,
                 'active' => false,
                 'icon' => 'icon-question'
