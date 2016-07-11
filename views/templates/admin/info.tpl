@@ -11,10 +11,10 @@
 {if $smarty.const._PS_VERSION_|@addcslashes:'\'' < '1.6'}
     <fieldset>
         <legend>
-            {l s='Twitter cards' mod='twittercard'}
+            {l s='Twitter Summary Cards w/ Large Image' mod='twittercard'}
         </legend>
         <p>
-            {l s='Module info'}
+            {l s='Help Screen To Use Module.' mod='twittercard'}
             <br>
         </p>
     </fieldset>
@@ -23,24 +23,29 @@
         <div class="row">
             <div class="col-md-4">
                 <h1>
-                    {l s='Thank you for your module purchase!'}
+                    {l s='Thank you for your module purchase!' mod='twittercard'}
                 </h1>
                 <p>
-                    {l s='StrikkeHawk eCommerce, Inc. would like to thank you for your recent module purchase. Support is limited to your envato support package add-on.'}
+                    {l s='StrikeHawk eCommerce, Inc. would like to thank you for your recent module purchase. Support is limited to your envato support package add-on.' mod='twittercard'}
                 </p>
                 <p>
-                    {l s='Module installation and configuration can be found in the video to the right and through our knowledgebase system link below the video. Any valid purchase with a valid envato support package may freely submit ticket issues in our support portal links found below. It will <strong>require</strong> an account registration prior to submitting your new issue.'}
+                    {l s='Module installation and configuration can be found in the video to the right and through our knowledgebase system link below the video. Any valid purchase with a valid envato support package may freely submit ticket issues in our support portal links found below. It will <strong>require</strong> an account registration prior to submitting your new issue.' mod='twittercard'}
                 </p>
-                <p><strong>{l s='Be sure to read the license agreement and legal disclaimer files found in your purchased zip archive file.'}</strong></p>
+                <p>
+                    <strong>{l s='Be sure to read the license agreement and legal disclaimer files found in your purchased zip archive file.' mod='twittercard'}</strong>
+                </p>
                 <div class="well well-lg">
                     <ul class="list-unstyled">
                         <li style="padding-bottom: 20px;">
-                            <i class="icon-check-square-o" aria-hidden="true"></i> {l s='Register your module Support.'}
-                            <a href="https://services.strikehawk.com/register.php" class="btn btn-info" role="button">{l s='Link'}</a>
+                            <i class="icon-check-square-o" aria-hidden="true"></i> {l s='Register your module Support.' mod='twittercard'}
+                            <a href="https://services.strikehawk.com/register.php" class="btn btn-info"
+                               role="button">{l s='Link' mod='twittercard'}</a>
                         </li>
                         <li>
-                            <i class="icon-child" aria-hidden="true"></i> {l s='Support Portal For Registered Customers.'}
-                            <a href="https://services.strikehawk.com/clientarea.php" class="btn btn-info" role="button">{l s='Link'}</a>
+                            <i class="icon-child"
+                               aria-hidden="true"></i> {l s='Support Portal For Registered Customers.' mod='twittercard'}
+                            <a href="https://services.strikehawk.com/clientarea.php" class="btn btn-info"
+                               role="button">{l s='Link' mod='twittercard'}</a>
                         </li>
                     </ul>
                     <div class="clear">&nbsp;</div>
@@ -50,7 +55,7 @@
                 <div class="media well">
                     <div class="media-body">
                         <h2 class="media-heading">
-                            {l s='Installation Tutorial'}
+                            {l s='Installation Tutorial' mod='twittercard'}
                         </h2>
                         <div class="media" align="center">
                             <iframe width="640" height="360"
@@ -58,13 +63,13 @@
                                     frameborder="0" allowfullscreen></iframe>
                             <div class="media-body">
                                 <h2 class="media-heading">
-                                    {l s='Twitter Card with Large Image Video Tutorial'}
+                                    {l s='Twitter Card with Large Image Video Tutorial' mod='twittercard'}
                                 </h2>
                                 <p>
-                                    {l s='If you are still confused after watching the video or cannot see its content, click here to read the full knowledgebase article.'}
+                                    {l s='If you are still confused after watching the video or cannot see its content, click here to read the full knowledge base article.' mod='twittercard'}
                                 </p>
                                 <p>
-                                    <a href="#" class="btn btn-info" role="button">{l s='Open External Link'}</a>
+                                    <a href="#" class="btn btn-info" role="button">{l s='Open External Link' mod='twittercard'}</a>
                                 </p>
                             </div>
                             <script src="https://apis.google.com/js/platform.js"></script>
@@ -82,7 +87,8 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h1 class="panel-title">
-                            {l s'PrestaShop Low Traffic Hosting' mod='twittercard'} <span class="lead text-danger pull-right">$9.95/mo</span>
+                            {l s='PrestaShop Low Traffic Hosting' mod='twittercard'}
+                            <span class="lead text-danger pull-right">$9.95 USD /mo</span>
                         </h1>
                     </div>
                     <div class="panel-body">
@@ -94,10 +100,10 @@
                                         {l s='Feature' mod='twittercard'}
                                     </th>
                                     <th>
-                                        Details
+                                        {l s='Details' mod='twittercard'}
                                     </th>
                                     <th>
-                                        Available
+                                        {l s='Available' mod='twittercard'}
                                     </th>
                                 </tr>
                                 </thead>
@@ -105,79 +111,79 @@
                                 <tr>
 
                                     <td>
-                                        Disk Quota
+                                        {l s='Disk Quota' mod='twittercard'}
                                     </td>
                                     <td>
-                                        2 Gigabytes
+                                        {l s='2 Gigabytes' mod='twittercard'}
                                     </td>
                                     <td>
-                                        Yes
+                                        {l s='Yes' mod='twittercard'}
                                     </td>
                                 </tr>
                                 <tr class="active">
 
                                     <td>
-                                        Traffic Bandwidth
+                                        {l s='Traffic Bandwidth' mod='twittercard'}
                                     </td>
                                     <td>
-                                        25 Gigabytes
+                                        {l s='25 Gigabytes' mod='twittercard'}
                                     </td>
                                     <td>
-                                        Yes
+                                        {l s='Yes' mod='twittercard'}
                                     </td>
                                 </tr>
                                 <tr class="info">
                                     <td>
-                                        Email Accounts
+                                        {l s='Email Accounts' mod='twittercard'}
                                     </td>
                                     <td>
-                                        5 Pop3/Imap Users
+                                        {l s='5 Pop3/Imap Users' mod='twittercard'}
                                     </td>
                                     <td>
-                                        Yes
+                                        {l s='Yes' mod='twittercard'}
                                     </td>
                                 </tr>
                                 <tr class="success">
                                     <td>
-                                        Cart Support
+                                        {l s='Cart Support' mod='twittercard'}
                                     </td>
                                     <td>
-                                        Email
+                                        {l s='Email' mod='twittercard'}
                                     </td>
                                     <td>
-                                        Yes
+                                        {l s='Yes' mod='twittercard'}
                                     </td>
                                 </tr>
                                 <tr class="warning">
                                     <td>
-                                        SSL Security
+                                        {l s='SSL Security' mod='twittercard'}
                                     </td>
                                     <td>
-                                        SSL Certificate
+                                        {l s='SSL Certificate' mod='twittercard'}
                                     </td>
                                     <td>
-                                        $16.50/yr
+                                        $16.50 USD /yr
                                     </td>
                                 </tr>
                                 <tr class="danger">
 
                                     <td>
-                                        Storage Device
+                                        {l s='Storage Device' mod='twittercard'}
                                     </td>
                                     <td>
-                                        Solid State Drive
+                                        {l s='Solid State Drive' mod='twittercard'}
                                     </td>
                                     <td>
-                                        $5.95/mo
+                                        $5.95 USD /mo
                                     </td>
                                 </tr>
                                 </tbody>
                             </table>
-                            <figcaption>Free Migration or Installation</figcaption>
+                            <figcaption>{l s='Free Migration or Installation' mod='twittercard'}</figcaption>
                         </figure>
                     </div>
                     <div class="panel-footer">
-                        <a href="#" class="btn btn-block btn-lg btn-success active" type="button">Order Hosting</a>
+                        <a href="#" class="btn btn-block btn-lg btn-success active" type="button">{l s='Order Hosting' mod='twittercard'}</a>
                     </div>
                 </div>
             </div>
@@ -185,7 +191,8 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h1 class="panel-title">
-                            PrestaShop Medium Traffic Hosting <span class="pull-right"><span class="text-danger lead">$19.95/mo</span> USD</span>
+                            {l s='PrestaShop Medium Traffic Hosting' mod='twittercard'}
+                            <span class="text-danger lead pull-right">$19.95 USD /mo</span> USD
                         </h1>
                     </div>
                     <div class="panel-body">
@@ -194,90 +201,90 @@
                                 <thead>
                                 <tr>
                                     <th>
-                                        Feature
+                                        {l s='Feature' mod='twittercard'}
                                     </th>
                                     <th>
-                                        Details
+                                        {l s='Details' mod='twittercard'}
                                     </th>
                                     <th>
-                                        Available
+                                        {l s='Available' mod='twittercard'}
                                     </th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 <tr>
                                     <td>
-                                        Disk Quota
+                                        {l s='Disk Quota' mod='twittercard'}
                                     </td>
                                     <td>
-                                        4 Gigabytes
+                                        {l s='4 Gigabytes' mod='twittercard'}
                                     </td>
                                     <td>
-                                        Yes
+                                        {l s='Yes' mod='twittercard'}
                                     </td>
                                 </tr>
                                 <tr class="active">
                                     <td>
-                                        Traffic Bandwidth
+                                        {l s='Traffic Bandwidth' mod='twittercard'}
                                     </td>
                                     <td>
-                                        50 Gigabytes
+                                        {l s='50 Gigabytes' mod='twittercard'}
                                     </td>
                                     <td>
-                                        Yes
+                                        {l s='Yes' mod='twittercard'}
                                     </td>
                                 </tr>
                                 <tr class="info">
                                     <td>
-                                        Email Accounts
+                                        {l s='Email Accounts' mod='twittercard'}
                                     </td>
                                     <td>
-                                        10 Pop3/Imap Users
+                                        {l s='10 Pop3/Imap Users' mod='twittercard'}
                                     </td>
                                     <td>
-                                        Yes
+                                        {l s='Yes' mod='twittercard'}
                                     </td>
                                 </tr>
                                 <tr class="success">
                                     <td>
-                                        Cart Support
+                                        {l s='Cart Support' mod='twittercard'}
                                     </td>
                                     <td>
-                                        Email, Skype
+                                        {l s='Email, Skype' mod='twittercard'}
                                     </td>
                                     <td>
-                                        Yes
+                                        {l s='Yes' mod='twittercard'}
                                     </td>
                                 </tr>
                                 <tr class="warning">
                                     <td>
-                                        SSL Security
+                                        {l s='SSL Security' mod='twittercard'}
                                     </td>
                                     <td>
-                                        SSL Certificate
+                                        {l s='SSL Certificate' mod='twittercard'}
                                     </td>
                                     <td>
-                                        $16.50/yr
+                                        $16.50 USD /yr
                                     </td>
                                 </tr>
                                 <tr class="danger">
                                     <td>
-                                        Storage Device
+                                        {l s='Storage Device' mod='twittercard'}
                                     </td>
                                     <td>
-                                        Solid State Drive
+                                        {l s='Solid State Drive' mod='twittercard'}
                                     </td>
                                     <td>
-                                        $5.95/mo
+                                        $5.95 USD /mo
                                     </td>
                                 </tr>
                                 </tbody>
                             </table>
-                            <figcaption>Free Migration or Installation</figcaption>
+                            <figcaption>{l s='Free Migration or Installation' mod='twittercard'}</figcaption>
                         </figure>
                     </div>
                     <div class="panel-footer">
-                        <a href="#" class="btn btn-block btn-lg btn-success active" type="button">Order Hosting</a>
+                        <a href="#" class="btn btn-block btn-lg btn-success active" type="button">{l s='Order Hosting' mod='twittercard'}</a>
                     </div>
                 </div>
 
@@ -286,7 +293,8 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h1 class="panel-title">
-                            PrestaShop High Traffic Hosting <span class="pull-right"><span class="text-danger lead">$29.95/mo</span> USD</span>
+                            {l s='PrestaShop High Traffic Hosting' mod='twittercard'} <span
+                                    class="text-danger lead pull-right">$29.95 USD /mo</span> USD
                         </h1>
                     </div>
                     <div class="panel-body">
@@ -295,90 +303,90 @@
                                 <thead>
                                 <tr>
                                     <th>
-                                        Feature
+                                        {l s='Feature' mod='twittercard'}
                                     </th>
                                     <th>
-                                        Details
+                                        {l s='Details' mod='twittercard'}
                                     </th>
                                     <th>
-                                        Available
+                                        {l s='Available' mod='twittercard'}
                                     </th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 <tr>
                                     <td>
-                                        Disk Quota
+                                        {l s='Disk Quota' mod='twittercard'}
                                     </td>
                                     <td>
-                                        8 Gigabytes
+                                        {l s='8 Gigabytes' mod='twittercard'}
                                     </td>
                                     <td>
-                                        Yes
+                                        {l s='Yes' mod='twittercard'}
                                     </td>
                                 </tr>
                                 <tr class="active">
                                     <td>
-                                        Traffic Bandwidth
+                                        {l s='Traffic Bandwidth' mod='twittercard'}
                                     </td>
                                     <td>
-                                        100 Gigabytes
+                                        {l s='100 Gigabytes' mod='twittercard'}
                                     </td>
                                     <td>
-                                        Yes
+                                        {l s='Yes' mod='twittercard'}
                                     </td>
                                 </tr>
                                 <tr class="info">
                                     <td>
-                                        Email Accounts
+                                        {l s='Email Accounts' mod='twittercard'}
                                     </td>
                                     <td>
-                                        20 Pop3/Imap Users
+                                        {l s='20 Pop3/Imap Users' mod='twittercard'}
                                     </td>
                                     <td>
-                                        Yes
+                                        {l s='Yes' mod='twittercard'}
                                     </td>
                                 </tr>
                                 <tr class="success">
                                     <td>
-                                        Cart Support
+                                        {l s='Cart Support' mod='twittercard'}
                                     </td>
                                     <td>
-                                        Email, Skype, Phone
+                                        {l s='Email, Skype, Phone' mod='twittercard'}
                                     </td>
                                     <td>
-                                        Yes
+                                        {l s='Yes' mod='twittercard'}
                                     </td>
                                 </tr>
                                 <tr class="warning">
                                     <td>
-                                        SSL Security
+                                        {l s='SSL Security' mod='twittercard'}
                                     </td>
                                     <td>
-                                        SSL Certificate
+                                        {l s='SSL Certificate' mod='twittercard'}
                                     </td>
                                     <td>
-                                        $16.50/yr
+                                        $16.50 USD /yr
                                     </td>
                                 </tr>
                                 <tr class="danger">
                                     <td>
-                                        Storage Device
+                                        {l s='Storage Device' mod='twittercard'}
                                     </td>
                                     <td>
-                                        Solid State Drive
+                                        {l s='Solid State Drive' mod='twittercard'}
                                     </td>
                                     <td>
-                                        Free
+                                        {l s='Free' mod='twittercard'}
                                     </td>
                                 </tr>
                                 </tbody>
                             </table>
-                            <figcaption>Free Migration or Installation</figcaption>
+                            <figcaption>{l s='Free Migration or Installation' mod='twittercard'}</figcaption>
                         </figure>
                     </div>
                     <div class="panel-footer">
-                        <a href="#" class="btn btn-block btn-lg btn-success active" type="button">Order Hosting</a>
+                        <a href="#" class="btn btn-block btn-lg btn-success active" type="button">{l s='Order Hosting' mod='twittercard'}</a>
                     </div>
                 </div>
             </div>
@@ -388,19 +396,23 @@
                 <div class="panel panel-info">
                     <div class="panel-heading">
                         <h3 class="panel-title" style="padding-left: 18px;">
-                            <i class="icon-hand-right" aria-hidden="true"></i> &nbsp; eCommerce Secure Cloud VPS Hosting
+                            <i class="icon-hand-right" aria-hidden="true"></i>
+                            &nbsp; {l s='eCommerce Secure Cloud VPS Hosting' mod='twittercard'}
                         </h3>
                     </div>
                     <div class="panel-body">
                         <p class="lead">
-                            All Cloud VPS servers are reconfigured to meet PCI DSS requirements including a full line of security best practices before turning it over to our customers. Our techs are trained and certified to work on your behalf.
+                            {l s='All Cloud VPS servers are reconfigured to meet PCI DSS requirements including a full line of
+                            security best practices before turning it over to our customers. Our techs are trained and
+                            certified to work on your behalf.' mod='twittercard'}
                         </p>
                         <p class="lead">
-                            We fully support the PrestaShop shopping cart and provide free cart support and limited software coding support for a professional fee quoted upon project approval.
+                            {l s='We fully support the PrestaShop shopping cart and provide free cart support and limited
+                            software coding support for a professional fee quoted upon project approval.' mod='twittercard'}
                         </p>
                     </div>
                     <div class="panel-footer">
-                        <a href="#" class="btn btn-block btn-lg btn-success active" type="button">More Information</a>
+                        <a href="#" class="btn btn-block btn-lg btn-success active" type="button">{l s='More Information' mod='twittercard'}</a>
                     </div>
                 </div>
             </div>
@@ -408,19 +420,23 @@
                 <div class="panel panel-primary">
                     <div class="panel-heading">
                         <h3 class="panel-title" style="padding-left: 18px;">
-                            <i class="icon-hand-right" aria-hidden="true"></i> &nbsp; eCommerce Secure Dedicated Servers
+                            <i class="icon-hand-right" aria-hidden="true"></i>
+                            &nbsp; {l s='eCommerce Secure Dedicated Servers' mod='twittercard'}
                         </h3>
                     </div>
                     <div class="panel-body">
                         <p class="lead">
-                            Our line of dual and quad core servers are fully managed and hardened for PCI DSS. Your server will be optimized to meet and exceed PrestaShop server requirements. Includes intrusion detection and firewall.
+                            {l s='Our line of dual and quad core servers are fully managed and hardened for PCI DSS. Your
+                            server will be optimized to meet and exceed PrestaShop server requirements. Includes
+                            intrusion detection and firewall.' mod='twittercard'}
                         </p>
-                        <p>
-                        <p class="lead">We fully support the PrestaShop shopping cart and provide free cart support and limited software coding support for a professional fee quoted upon project approval.</p>
+                        <p class="lead">
+                            {l s='We fully support the PrestaShop shopping cart and provide free cart support and
+                            limited software coding support for a professional fee quoted upon project approval.' mod='twittercard'}
                         </p>
                     </div>
                     <div class="panel-footer">
-                        <a href="#" class="btn btn-block btn-lg btn-success active" type="button">More Information</a>
+                        <a href="#" class="btn btn-block btn-lg btn-success active" type="button">{l s='More Information' mod='twittercard'}</a>
                     </div>
                 </div>
             </div>
