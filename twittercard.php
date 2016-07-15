@@ -173,10 +173,15 @@ class TwitterCard extends Module
                 'tab_module' => $this->tab,
             )
         );
+        $baseUri = '//'.$this->context->shop->domain_ssl.$this->context->shop->physical_uri;
+        if (empty($this->context->shop->domain_ssl)) {
+            $baseUri = '//'.$this->context->shop->domain.$this->context->shop->physical_uri;
+        }
         $this->context->smarty->assign(array(
             'displayName' => $this->displayName,
             'moduleUrl' => $this->moduleUrl,
-            'menuTabs' => $this->initNavigation()
+            'menuTabs' => $this->initNavigation(),
+            'imageDir' => $baseUri.'modules/'.$this->name.'/views/img/',
         ));
 
         $output = '';
