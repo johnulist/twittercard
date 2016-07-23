@@ -153,6 +153,7 @@ class TwitterCard extends Module
         } else {
             $this->context->controller->addJS($this->local_path.'/views/js/v1-config_15.js');
         }
+        $this->context->controller->addCSS($this->local_path.'/views/css/twittercard.css');
 
         $this->moduleUrl = Context::getContext()->link->getAdminLink('AdminModules', true).'&'.http_build_query(
             array(
