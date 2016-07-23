@@ -1,4 +1,5 @@
-{*
+<?php
+/**
  * Copyright (C) StrikeHawk eCommerce, Inc. - All Rights Reserved
  *
  * Unauthorized copying of this file, via any medium is strictly prohibited
@@ -7,242 +8,575 @@
  * @copyright 2016 StrikeHawk eCommerce, Inc.
  * @license   proprietary
  * Intellectual Property of StrikeHawk eCommerce, Inc.
-*}
-{if $smarty.const._PS_VERSION_|@addcslashes:'\'' < '1.6'}
-    <fieldset>
-        <legend>
-            {l s='Twitter Summary Cards w/ Large Image' mod='twittercard'}
-        </legend>
-        <p>
-            {l s='Help Screen To Use Module.' mod='twittercard'}
-            <br>
-        </p>
-    </fieldset>
-{else}
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-6">
-                <div class="panel">
-                    <div class="panel-heading">
-                        <i class="icon icon-info"></i> {l s='Thank you for your module purchase!' mod='twittercard'}
-                    </div>
-                    <div class="panel-body">
-                        <p>
-                            {l s='StrikeHawk eCommerce, Inc. would like to thank you for your recent module purchase. Support is limited to your envato support package add-on.' mod='twittercard'}
-                        </p>
-                        <p>
-                            {l s='Module installation and configuration can be found in the video to the right and through our knowledgebase system link below the video. Any valid purchase with a valid envato support package may freely submit ticket issues in our support portal links found below. It will' mod='twittercard'} <strong>{l s='require' mod='twittercard'}</strong> {l s='an account registration prior to submitting your new issue.' mod='twittercard'}
-                        </p>
-                        <p>
-                            <strong>{l s='Be sure to read the license agreement and legal disclaimer files found in your purchased zip archive file.' mod='twittercard'}</strong>
-                        </p>
-                        <ul class="list-unstyled">
-                            <li style="padding-bottom: 20px;">
-                                <i class="icon-check-square-o"
-                                   aria-hidden="true"></i> {l s='Register your module Support.' mod='twittercard'}
-                                <a href="https://services.strikehawk.com/register.php" class="btn btn-info"
-                                   role="button">{l s='Link' mod='twittercard'}</a>
-                            </li>
-                            <li>
-                                <i class="icon-child"
-                                   aria-hidden="true"></i> {l s='Support Portal For Registered Customers.' mod='twittercard'}
-                                <a href="https://services.strikehawk.com/clientarea.php" class="btn btn-info"
-                                   role="button">{l s='Link' mod='twittercard'}</a>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="panel-footer">
-                        <ul class="list-inline">
-                            <li><a id="modal-222958" href="#modal-container-222958" role="button" class="btn btn-primary" data-toggle="modal">Newsletter Subscription</a>
-                            </li>
-                            <li>
-                                <a href="https://analytics.twitter.com/user/{$twitterUser|replace:'@':''|escape:'htmlall':'UTF-8'}/twitter_cards"
-                                   target="_blank" title="Twitter Card Analytics" class="btn btn-primary pull-right">Twitter Analyics</a>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="modal fade" id="modal-container-222958" role="dialog" aria-labelledby="myModalLabel"
-                         aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h4 class="modal-title" id="myModalLabel">
-                                        {l s='Newsletter Subscription' mod='twittercard'}
-                                    </h4>
-                                </div>
-                                <div class="modal-body">
-                                    <!-- Begin MailChimp Signup Form -->
-                                    <link href="//cdn-images.mailchimp.com/embedcode/classic-10_7.css" rel="stylesheet"
-                                          type="text/css">
-                                    <div id="mc_embed_signup">
-                                        <form action="//strikehawk.us8.list-manage.com/subscribe/post?u=b3d6d6ba3f9182a0a36ba0052&amp;id=5374327a0f"
-                                              method="post" id="mc-embedded-subscribe-form"
-                                              name="mc-embedded-subscribe-form" class="validate" target="_blank"
-                                              novalidate>
-                                            <div id="mc_embed_signup_scroll">
-                                                <h2>Subscribe to our mailing list</h2>
-                                                <div class="indicates-required"><span class="asterisk">*</span>
-                                                    indicates required
-                                                </div>
-                                                <div class="mc-field-group">
-                                                    <label for="mce-FNAME">First Name <span class="asterisk">*</span>
-                                                    </label>
-                                                    <input type="text" value="" name="FNAME" class="required"
-                                                           id="mce-FNAME">
-                                                </div>
-                                                <div class="mc-field-group">
-                                                    <label for="mce-LNAME">Last Name <span class="asterisk">*</span>
-                                                    </label>
-                                                    <input type="text" value="" name="LNAME" class="required"
-                                                           id="mce-LNAME">
-                                                </div>
-                                                <div class="mc-field-group">
-                                                    <label for="mce-EMAIL">Email Address <span class="asterisk">*</span>
-                                                    </label>
-                                                    <input type="email" value="" name="EMAIL" class="required email"
-                                                           id="mce-EMAIL">
-                                                </div>
-                                                <div class="mc-field-group input-group">
-                                                    <strong>Choose Your Topics? </strong>
-                                                    <ul>
-                                                        <li><input type="checkbox" value="1" name="group[11653][1]"
-                                                                   id="mce-group[11653]-11653-0"><label
-                                                                    for="mce-group[11653]-11653-0">PrestaShop</label>
-                                                        </li>
-                                                        <li><input type="checkbox" value="4" name="group[11653][4]"
-                                                                   id="mce-group[11653]-11653-1"><label
-                                                                    for="mce-group[11653]-11653-1">WordPress</label>
-                                                        </li>
-                                                        <li><input type="checkbox" value="8" name="group[11653][8]"
-                                                                   id="mce-group[11653]-11653-2"><label
-                                                                    for="mce-group[11653]-11653-2">osCommerce</label>
-                                                        </li>
-                                                        <li><input type="checkbox" value="2" name="group[11653][2]"
-                                                                   id="mce-group[11653]-11653-3"><label
-                                                                    for="mce-group[11653]-11653-3">CRE Loaded</label>
-                                                        </li>
-                                                        <li><input type="checkbox" value="16" name="group[11653][16]"
-                                                                   id="mce-group[11653]-11653-4"><label
-                                                                    for="mce-group[11653]-11653-4">Web Hosting
-                                                                Tips</label></li>
-                                                    </ul>
-                                                </div>
-                                                <div class="mc-field-group input-group">
-                                                    <strong>Email Format </strong>
-                                                    <ul>
-                                                        <li><input type="radio" value="html" name="EMAILTYPE"
-                                                                   id="mce-EMAILTYPE-0"><label for="mce-EMAILTYPE-0">html</label>
-                                                        </li>
-                                                        <li><input type="radio" value="text" name="EMAILTYPE"
-                                                                   id="mce-EMAILTYPE-1"><label for="mce-EMAILTYPE-1">text</label>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                                <p>
-                                                    <a href="http://us8.campaign-archive1.com/home/?u=b3d6d6ba3f9182a0a36ba0052&id=5374327a0f"
-                                                       title="View previous campaigns">View previous campaigns.</a></p>
-                                                <p>Powered by <a href="http://eepurl.com/TqyPL"
-                                                                 title="MailChimp - email marketing made easy and fun">MailChimp</a>
-                                                </p>
-                                                <div id="mce-responses" class="clear">
-                                                    <div class="response" id="mce-error-response"
-                                                         style="display:none"></div>
-                                                    <div class="response" id="mce-success-response"
-                                                         style="display:none"></div>
-                                                </div>
-                                                <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
-                                                <div style="position: absolute; left: -5000px;" aria-hidden="true">
-                                                    <input type="text" name="b_b3d6d6ba3f9182a0a36ba0052_5374327a0f"
-                                                           tabindex="-1" value=""></div>
-                                                <div class="clear"><input type="submit" value="Subscribe"
-                                                                          name="subscribe" id="mc-embedded-subscribe"
-                                                                          class="button"></div>
-                                            </div>
-                                        </form>
-                                    </div>
-                                    <script type='text/javascript'
-                                            src='//s3.amazonaws.com/downloads.mailchimp.com/js/mc-validate.js'></script>
-                                    {literal}
-                                        <script type='text/javascript'>(function ($) {
-                                                window.fnames = new Array();
-                                                window.ftypes = new Array();
-                                                fnames[1] = 'FNAME';
-                                                ftypes[1] = 'text';
-                                                fnames[2] = 'LNAME';
-                                                ftypes[2] = 'text';
-                                                fnames[0] = 'EMAIL';
-                                                ftypes[0] = 'email';
-                                            }(jQuery));
-                                            var $mcj = jQuery.noConflict(true);</script>
-                                    {/literal}
-                                    <!--End mc_embed_signup-->
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-default" data-dismiss="modal">
-                                        Close
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="panel">
-                    <div class="carousel slide" id="carousel-151629">
-                        <ol class="carousel-indicators">
-                            <li class="active" data-slide-to="0" data-target="#carousel-151629">
-                            </li>
-                            <li data-slide-to="1" data-target="#carousel-151629">
-                            </li>
-                            <li data-slide-to="2" data-target="#carousel-151629">
-                            </li>
-                        </ol>
-                        <div class="carousel-inner">
-                            <div class="item active">
-                                <img alt="Carousel Bootstrap First" src="{$imageDir}tw-before.jpg"/>
-                            </div>
-                            <div class="item">
-                                <img alt="Carousel Bootstrap Second" src="{$imageDir}tw-after.jpg"/>
-                            </div>
-                            <div class="item">
-                                <img alt="Carousel Bootstrap Third" src="{$imageDir}product-twitter.jpg"/>
-                            </div>
-                        </div>
-                        <a class="left carousel-control" href="#carousel-151629" data-slide="prev">
-                            <span class="icon-chevron-left"></span>
-                        </a>
-                        <a class="right carousel-control" href="#carousel-151629" data-slide="next">
-                            <span class="icon-chevron-right"></span>
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="panel">
-                    <div class="panel-heading"><i
-                                class="icon-twitter"></i> {l s='Twitter Summary Card w/ Large Image Tutorial' mod='twittercard'}
-                    </div>
-                    <div class="panel-body">
-                        <div class="row embed-responsive embed-responsive-16by9">
-                            <h4 class="modal-title" id="myModalLabel">
-                                {l s='Installation Tutorial' mod='twittercard'}
-                            </h4>
-                            <div align="center">
-                                <iframe align="center" class="embed-responsive-item" width="640" height="360"
-                                        src="https://www.youtube-nocookie.com/embed/x6PVglpRnV4?rel=0&amp;showinfo=0"
-                                        frameborder="0" allowfullscreen>
-                                </iframe>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div align="center" class="">
-                                <script src="https://apis.google.com/js/platform.js"></script>
-                                <div align="center" class="g-ytsubscribe" data-channelid="UCVHjzEGC0GsBSMynK0fJmEg"
-                                     data-layout="full" data-count="default"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-{/if}
+ */
+
+if (!defined('_PS_VERSION_')) {
+	exit;
+}
+
+/**
+ * Class TwitterCard
+ */
+class TwitterCard extends Module
+{
+	const TWITTER_USER = 'TWITTERCARD_TWITTERNAME';
+	const HOME_PAGE_TITLE = 'TWITTERCARD_TWITTERHOMETITLE';
+	const HOME_PAGE_DESCRIPTION = 'TWITTERCARD_TWITTERHOMEDESC';
+	const HOME_PAGE_IMAGE = 'TWITTERCARD_TWITTERHOMEIMAGE';
+	const HOME_PAGE_LOGO_URL = 'TWITTERCARD_TWITTERHOMEIMAGEURL';
+	const REGENERATE_IMAGES = 'TWITTERCARD_REGENERATE_IMAGES';
+	const MAX_EXECUTION_TIME = 7200;
+
+	// In order to add a new tab: define a new menu constant here and assign a unique positive number
+	const MENU_SETTINGS = 1;
+	const MENU_INFO = 2;
+
+	public $menu;
+	public $moduleUrl;
+
+	/**
+	 * TwitterCard constructor.
+	 */
+	public function __construct()
+	{
+		$this->name = 'twittercard';
+		$this->tab = 'front_office_features';
+		$this->version = '1.0.5';
+		$this->author = 'StrikeHawk eCommerce, Inc.';
+		$this->need_instance = 0;
+
+		$this->bootstrap = true;
+
+		parent::__construct();
+
+		$this->displayName = $this->l('Twitter Summary With Large Image Card');
+		$this->description = $this->l('Adds Twitter Summary Card with large image to your site');
+	}
+
+
+	/**
+	 * Install the module
+	 *
+	 * @return bool Whether the module has been installed successfully
+	 * @throws PrestaShopException
+	 */
+	public function install()
+	{
+		return parent::install() &&
+		       $this->installImageType() &&
+		       $this->registerHook('header') &&
+		       $this->registerHook('backOfficeHeader');
+	}
+
+	/**
+	 * Uninstall the module
+	 *
+	 * @return bool Whether the module has been successfully uninstalled
+	 */
+	public function uninstall()
+	{
+		Configuration::deleteByName(self::TWITTER_USER);
+		Configuration::deleteByName(self::HOME_PAGE_TITLE);
+		Configuration::deleteByName(self::HOME_PAGE_DESCRIPTION);
+		Configuration::deleteByName(self::HOME_PAGE_IMAGE);
+		Configuration::deleteByName(self::HOME_PAGE_LOGO_URL);
+
+		$this->uninstallImageType();
+
+		return parent::uninstall();
+	}
+
+	/**
+	 * Hook to the FO pages' <HEAD></HEAD> tags
+	 *
+	 * @param array $params Hook parameters
+	 * @return string Hook HTML
+	 */
+	public function hookHeader($params)
+	{
+		$link = $this->context->link;
+		$smarty = $this->context->smarty;
+		$cookie = $this->context->cookie;
+		if (Tools::getValue('controller') == 'product') {
+			$cover = Product::getCover((int) Tools::getValue('id_product'));
+			$product = new Product(Tools::getValue('id_product'), true, (int) $this->context->language->id);
+			if (is_array($cover) && sizeof($cover) == 1) {
+				/** @var Image $image */
+				$image = Image::getCover((int) $product->id);
+				$twitterImage = $link->getImageLink(
+					$product->link_rewrite[$cookie->id_lang],
+					Tools::getValue('id_product').'-'.$cover['id_image'],
+					'twitter_default'
+				);
+			}
+
+			$smarty->assign(
+				array(
+					'twitterUser' => Configuration::get(self::TWITTER_USER),
+					'twitterSite' => Configuration::get(self::TWITTER_USER),
+					'twitterProductName' => $product->name,
+					'twitterDescription' => $product->description_short,
+					'twitterImage' => isset($twitterImage) ? $twitterImage : '',
+					'twitterImageAlt' => (isset($image) && !empty($image->legend)) ? $image->legend : strip_tags($product->description_short),
+					'twitterPrice' => $product->price,
+				)
+			);
+
+			return $this->display(__FILE__, 'twittercard_product.tpl');
+		} elseif (Tools::getValue('controller') == 'index') {
+			$smarty->assign(
+				array(
+					'twitterUser' => Configuration::get(self::TWITTER_USER),
+					'twitterSite' => Configuration::get(self::TWITTER_USER),
+					'twitterHomeTitle' => Configuration::get(self::HOME_PAGE_TITLE),
+					'twitterHomeDescription' => Configuration::get(self::HOME_PAGE_DESCRIPTION),
+					'twitterHomeLogo' => (bool) Configuration::get(self::HOME_PAGE_IMAGE),
+					'twitterHomeLogoUrl' => Configuration::get(self::HOME_PAGE_LOGO_URL),
+				)
+			);
+
+			return $this->display(__FILE__, 'twittercard_index.tpl');
+		}
+
+		return '';
+	}
+
+	/**
+	 * Hook to the BO pages' <HEAD></HEAD> tags
+	 *
+	 * @param array $params Hook parameters
+	 * @return string Hook HTML
+	 */
+	public function hookBackOfficeHeader()
+	{
+		$this->context->controller->addJquery();
+		if (Tools::getValue('configure') == $this->name || Tools::getValue('module_name') == $this->name) {
+			if (version_compare(_PS_VERSION_, '1.6.0.0', '>=')) {
+				$this->context->controller->addJS($this->_path.'views/js/v1-config.js');
+			} else {
+				$this->context->controller->addJS($this->_path.'views/js/v1-config_15.js');
+			}
+		}
+	}
+
+	/**
+	 * Get the module's configuration page
+	 *
+	 * @return string Configuration page HTML
+	 */
+	public function getContent()
+	{
+		$this->moduleUrl = Context::getContext()->link->getAdminLink('AdminModules', true).'&'.http_build_query(
+				array(
+					'configure' => $this->name,
+					'module_name' => $this->name,
+					'tab_module' => $this->tab,
+					'twitterUser' => Configuration::get(self::TWITTER_USER)
+				)
+			);
+		$baseUri = '//'.$this->context->shop->domain_ssl.$this->context->shop->physical_uri;
+		if (empty($this->context->shop->domain_ssl)) {
+			$baseUri = '//'.$this->context->shop->domain.$this->context->shop->physical_uri;
+		}
+		$this->context->smarty->assign(array(
+			'displayName' => $this->displayName,
+			'moduleUrl' => $this->moduleUrl,
+			'menuTabs' => $this->initNavigation(),
+			'imageDir' => $baseUri.'modules/'.$this->name.'/views/img/',
+		));
+
+		$output = '';
+
+		if (Tools::isSubmit('submit'.$this->name)) {
+			$output .= $this->postProcess();
+		}
+
+		// When version is 1.6 or higher, this switch defines what page should be shown
+		// To just add a new template to a menu item, use the following template and add it to the top:
+		// case self::{{menu constant}}:
+		// $this->menu = self::{{menu constant}};
+		// return $output.$this->display(__FILE__, 'views/templates/admin/{{menu template}}.tpl');
+		// break;
+		if (version_compare(_PS_VERSION_, '1.6.0.0', '>=')) {
+			$output .= $this->display(__FILE__, 'views/templates/admin/navbar.tpl');
+
+			switch (Tools::getValue('menu')) {
+				case self::MENU_INFO:
+					$this->menu = self::MENU_INFO;
+
+					return $output.$this->display(__FILE__, 'views/templates/admin/info.tpl');
+				default:
+					$this->menu = self::MENU_SETTINGS;
+
+					return $output.$this->displayForm();
+			}
+		} else {
+			$output .= $this->display(__FILE__, 'views/templates/admin/info.tpl');
+		}
+
+		return $output.$this->displayForm();
+	}
+
+	/**
+	 *  Configuration Page: display form
+	 */
+	public function displayForm()
+	{
+		// Get default language
+		$defaultLang = (int) Configuration::get('PS_LANG_DEFAULT');
+
+		$helper = new HelperForm();
+
+		// Module, token and currentIndex
+		$helper->module = $this;
+		$helper->name_controller = $this->name;
+		$helper->token = Tools::getAdminTokenLite('AdminModules');
+		$helper->currentIndex = AdminController::$currentIndex.'&configure='.$this->name;
+
+		// Language
+		$helper->default_form_language = $defaultLang;
+		$helper->allow_employee_form_lang = $defaultLang;
+
+		// Title and toolbar
+		$helper->title = $this->displayName;
+		$helper->show_toolbar = false;
+		$helper->toolbar_scroll = false;
+		$helper->submit_action = 'submit'.$this->name;
+		$helper->toolbar_btn = array(
+			'save' =>
+				array(
+					'desc' => $this->l('Save'),
+					'href' => AdminController::$currentIndex.'&configure='.$this->name.'&save'.$this->name.
+					          '&token='.Tools::getAdminTokenLite('AdminModules'),
+				),
+			'back' => array(
+				'href' => AdminController::$currentIndex.'&token='.Tools::getAdminTokenLite('AdminModules'),
+				'desc' => $this->l('Back to list'),
+			),
+		);
+		$helper->fields_value = $this->getFormValues();
+
+
+		return $helper->generateForm(array($this->getTwitterCardForm(), $this->getRegenerateForm()));
+	}
+
+	/**
+	 * Get the Twitter Card form
+	 *
+	 * @return array Form structure
+	 */
+	protected function getTwitterCardForm()
+	{
+		return array(
+			'form' => array(
+				'legend' => array(
+					'title' => $this->l('Twitter Card Configuration'),
+					'icon' => 'icon-cogs',
+				),
+				'description' => sprintf($this->l('You can test your Twitter Cards %shere.%s'), '<a href="https://dev.twitter.com/docs/cards/validation/validator" target="_blank">', '</a>'),
+				'input' => array(
+					array(
+						'type' => 'text',
+						'label' => $this->l('Twitter name (ex. @strikehawkecomm)'),
+						'name' => self::TWITTER_USER,
+						'required' => true,
+					),
+					array(
+						'type' => 'text',
+						'label' => $this->l('Home Page Title'),
+						'name' => self::HOME_PAGE_TITLE,
+						'required' => true,
+					),
+					array(
+						'type' => 'textarea',
+						'label' => $this->l('Home Page Description (limit: 200 chars)'),
+						'name' => self::HOME_PAGE_DESCRIPTION,
+						'required' => true,
+					),
+					array(
+						'type' => 'switch',
+						'label' => $this->l('Home page image'),
+						'name' => self::HOME_PAGE_IMAGE,
+						'is_bool' => true,
+						'values' => array(
+							array(
+								'id' => 'active_on',
+								'value' => true,
+								'label' => $this->l('Yes'),
+							),
+							array(
+								'id' => 'active_off',
+								'value' => false,
+								'label' => $this->l('No'),
+							),
+						),
+					),
+					array(
+						'type' => 'text',
+						'label' => $this->l('Enter the logo URL'),
+						'name' => self::HOME_PAGE_LOGO_URL,
+						'required' => true,
+					),
+				),
+				'submit' => array(
+					'title' => $this->l('Save'),
+				),
+			),
+		);
+	}
+
+	/**
+	 * Get regenerate form
+	 *
+	 * @return array Form structure
+	 */
+	protected function getRegenerateForm()
+	{
+		return array(
+			'form' => array(
+				'legend' => array(
+					'title' => $this->l('Regenerate product images'),
+					'icon' => 'icon-cogs',
+				),
+				'description' => $this->l('After installing this module, a new image type has been defined (twitter_default) in order to fit images in the Twitter Card. In order to show already existing product images in the Twitter Card they will have to be regenerated first. You can do that with this option.'),
+				'input' => array(
+					array(
+						'type' => 'switch',
+						'label' => $this->l('I would like to regenerate product images'),
+						'name' => self::REGENERATE_IMAGES,
+						'is_bool' => true,
+						'values' => array(
+							array(
+								'id' => 'active_on',
+								'value' => true,
+								'label' => $this->l('Yes'),
+							),
+							array(
+								'id' => 'active_off',
+								'value' => false,
+								'label' => $this->l('No'),
+							),
+						),
+					),
+				),
+				'submit' => array(
+					'title' => $this->l('Regenerate'),
+					'icon' => 'process-icon-cogs'
+				),
+			),
+		);
+	}
+
+	/**
+	 * Get form values
+	 *
+	 * @return array Form values
+	 */
+	protected function getFormValues()
+	{
+		return array(
+			self::TWITTER_USER => Configuration::get(self::TWITTER_USER),
+			self::HOME_PAGE_TITLE => Configuration::get(self::HOME_PAGE_TITLE),
+			self::HOME_PAGE_DESCRIPTION => Configuration::get(self::HOME_PAGE_DESCRIPTION),
+			self::HOME_PAGE_IMAGE => Configuration::get(self::HOME_PAGE_IMAGE),
+			self::HOME_PAGE_LOGO_URL => Configuration::get(self::HOME_PAGE_LOGO_URL),
+			self::REGENERATE_IMAGES => false,
+		);
+	}
+
+	/**
+	 * Install Twitter image type
+	 * Dimension: 440px x 220px
+	 */
+	protected function installImageType()
+	{
+		if (!ImageType::typeAlreadyExists('twitter_default')) {
+			$imageType = new ImageType();
+			$imageType->name = 'twitter_default';
+			$imageType->width = 440;
+			$imageType->height = 220;
+			$imageType->products = true;
+			$imageType->categories = false;
+			$imageType->manufacturers = false;
+			$imageType->suppliers = false;
+			$imageType->scenes = false;
+			$imageType->stores = false;
+
+			return $imageType->add();
+		}
+
+		return true;
+	}
+
+	/**
+	 * Uninstall Twitter image type
+	 * Dimension: 440px x 220px
+	 */
+	protected function uninstallImageType()
+	{
+		if (ImageType::typeAlreadyExists('twitter_default')) {
+			$sql = new DbQuery();
+			$sql->select('it.`id_image_type`');
+			$sql->from('image_type', 'it');
+			$sql->where('it.`name` = \'twitter_default\'');
+
+			$imageType = new ImageType((int) Db::getInstance(_PS_USE_SQL_SLAVE_)->getValue($sql));
+
+			if (Validate::isLoadedObject($imageType)) {
+				return $imageType->delete();
+			}
+		}
+
+		return true;
+	}
+
+	/**
+	 * Initialize navigation
+	 *
+	 * @return array Menu items
+	 */
+	protected function initNavigation()
+	{
+		/*
+		 * This array defines the menu items
+		 * In order to add a new menu, you will have to add a new sub array:
+		 * array(
+		 *     'short' => $this->l('{{menu display name}}'),
+		 *     'desc' => $this->l('{{menu description}}'),
+		 *     'href' => $this->moduleUrl.'&menu='.self::{{menu constant name}},
+		 *     'active' => false,
+		 *     'icon' => '{{menu icon}}'
+		 *   )
+		 */
+		$menu = array(
+			'settings' => array(
+				'short' => $this->l('Settings'),
+				'desc' => $this->l('Module settings'),
+				'href' => $this->moduleUrl.'&menu='.self::MENU_SETTINGS,
+				'active' => false,
+				'icon' => 'icon-gears'
+			),
+			'info' => array(
+				'short' => $this->l('Help'),
+				'desc' => $this->l('Help'),
+				'href' => $this->moduleUrl.'&menu='.self::MENU_INFO,
+				'active' => false,
+				'icon' => 'icon-question'
+			),
+		);
+
+		/*
+		 * This helps making the right tab active
+		 * When adding a new tab, use the following template and add it to the top of the switch:
+		 * case {{menu constant name}}:
+		 *     $this->menu = self::{{menu constant name}};
+		 *     $menu['{{menu name}}']['active'] = true;
+		 *     break;
+		 */
+		switch (Tools::getValue('menu')) {
+			case self::MENU_INFO:
+				$this->menu = self::MENU_INFO;
+				$menu['info']['active'] = true;
+				break;
+			default:
+				$this->menu = self::MENU_SETTINGS;
+				$menu['settings']['active'] = true;
+				break;
+		}
+
+		return $menu;
+	}
+
+	/**
+	 * Post process configuration form
+	 */
+	protected function postProcess()
+	{
+		$success = true;
+		foreach ($this->getFormValues() as $key => $value) {
+			if (Tools::isSubmit($key)) {
+				if (!Configuration::updateValue($key, Tools::getValue($key))) {
+					$success = false;
+				}
+			}
+		}
+		if (Tools::getValue(self::REGENERATE_IMAGES)) {
+			$this->regenerateThumbnails('twitter_default', true);
+		}
+
+		if ($success) {
+			return $this->displayConfirmation($this->l('Form successfully updated'));
+		}
+
+		return $this->displayError($this->l('There was a problem while updating the configuration'));
+	}
+
+	/**
+	 * Regenerate thumbnails
+	 *
+	 * @param string $type            Image type
+	 * @param bool   $deleteOldImages Delete old images first
+	 * @return bool Whether images have been regenerated successfully
+	 */
+	protected function regenerateThumbnails($type = 'all', $deleteOldImages = false)
+	{
+		$this->start_time = time();
+		ini_set('max_execution_time', self::MAX_EXECUTION_TIME); // ini_set may be disabled, we need the real value
+		$this->max_execution_time = (int)ini_get('max_execution_time');
+		ignore_user_abort(true);
+		$languages = Language::getLanguages(false);
+
+		$process = array(
+			array('type' => 'categories', 'dir' => _PS_CAT_IMG_DIR_),
+			array('type' => 'manufacturers', 'dir' => _PS_MANU_IMG_DIR_),
+			array('type' => 'suppliers', 'dir' => _PS_SUPP_IMG_DIR_),
+			array('type' => 'scenes', 'dir' => _PS_SCENE_IMG_DIR_),
+			array('type' => 'products', 'dir' => _PS_PROD_IMG_DIR_),
+			array('type' => 'stores', 'dir' => _PS_STORE_IMG_DIR_)
+		);
+
+		// Launching generation process
+		foreach ($process as $proc) {
+			if ($type != 'all' && $type != $proc['type']) {
+				continue;
+			}
+
+			// Getting format generation
+			$formats = ImageType::getImagesTypes($proc['type']);
+			if ($type != 'all') {
+				$format = (string) Tools::getValue('format_'.$type);
+				if ($format != 'all') {
+					foreach ($formats as $k => $form) {
+						if ($form['id_image_type'] != $format) {
+							unset($formats[$k]);
+						}
+					}
+				}
+			}
+
+			if ($deleteOldImages) {
+				$this->_deleteOldImages($proc['dir'], $formats, ($proc['type'] == 'products' ? true : false));
+			}
+			if (($return = $this->_regenerateNewImages($proc['dir'], $formats, ($proc['type'] == 'products' ? true : false))) === true) {
+				if (!count($this->errors)) {
+					$this->errors[] = sprintf(Tools::displayError('Cannot write images for this type: %s. Please check the %s folder\'s writing permissions.'), $proc['type'], $proc['dir']);
+				}
+			} elseif ($return == 'timeout') {
+				$this->errors[] = Tools::displayError('Only part of the images have been regenerated. The server timed out before finishing.');
+			} else {
+				if ($proc['type'] == 'products') {
+					if ($this->_regenerateWatermark($proc['dir'], $formats) == 'timeout') {
+						$this->errors[] = Tools::displayError('Server timed out. The watermark may not have been applied to all images.');
+					}
+				}
+				if (!count($this->errors)) {
+					if ($this->_regenerateNoPictureImages($proc['dir'], $formats, $languages)) {
+						$this->errors[] = sprintf(Tools::displayError('Cannot write "No picture" image to (%s) images folder. Please check the folder\'s writing permissions.'), $proc['type']);
+					}
+				}
+			}
+		}
+
+		return (count($this->errors) > 0 ? false : true);
+	}
+}
