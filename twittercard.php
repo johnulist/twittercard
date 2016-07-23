@@ -64,8 +64,7 @@ class TwitterCard extends Module
     {
         return parent::install() &&
             $this->installImageType() &&
-            $this->registerHook('header') &&
-            $this->registerHook('backOfficeHeader');
+            $this->registerHook('header');
     }
 
     /**
@@ -142,30 +141,19 @@ class TwitterCard extends Module
     }
 
     /**
-     * Hook to the BO pages' <HEAD></HEAD> tags
-     *
-     * @param array $params Hook parameters
-     * @return string Hook HTML
-     */
-    public function hookBackOfficeHeader()
-    {
-        $this->context->controller->addJquery();
-        if (Tools::getValue('configure') == $this->name || Tools::getValue('module_name') == $this->name) {
-            if (version_compare(_PS_VERSION_, '1.6.0.0', '>=')) {
-                $this->context->controller->addJS($this->_path.'views/js/v1-config.js');
-            } else {
-                $this->context->controller->addJS($this->_path.'views/js/v1-config_15.js');
-            }
-        }
-    }
-
-    /**
      * Get the module's configuration page
      *
      * @return string Configuration page HTML
      */
     public function getContent()
     {
+        $this->context->controller->addJquery();
+        if (version_compare(_PS_VERSION_, '1.6.0.0', '>=')) {
+            $this->context->controller->addJS($this->local_path.'/views/js/v1-config.js');
+        } else {
+            $this->context->controller->addJS($this->local_path.'/views/js/v1-config_15.js');
+        }
+
         $this->moduleUrl = Context::getContext()->link->getAdminLink('AdminModules', true).'&'.http_build_query(
             array(
                 'configure' => $this->name,
