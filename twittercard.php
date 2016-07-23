@@ -149,13 +149,14 @@ class TwitterCard extends Module
      */
     public function getContent()
     {
+        ddd($this->local_path.'/views/js/v1-config.js');
         $this->context->controller->addJquery();
         if (version_compare(_PS_VERSION_, '1.6.0.0', '>=')) {
-            $this->context->controller->addJS($this->local_path.'/views/js/v1-config.js');
+            $this->context->controller->addJS($this->local_path.'views/js/v1-config.js');
         } else {
-            $this->context->controller->addJS($this->local_path.'/views/js/v1-config_15.js');
+            $this->context->controller->addJS($this->local_path.'views/js/v1-config_15.js');
         }
-        $this->context->controller->addCSS($this->local_path.'/views/css/twittercard.css');
+        $this->context->controller->addCSS($this->local_path.'views/css/twittercard.css');
 
         $this->moduleUrl = Context::getContext()->link->getAdminLink('AdminModules', true).'&'.http_build_query(
             array(
