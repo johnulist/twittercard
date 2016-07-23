@@ -33,6 +33,8 @@ class TwitterCard extends Module
 
     public $menu;
     public $moduleUrl;
+    protected $startTime;
+    protected $maxExecutionTime;
 
     /**
      * TwitterCard constructor.
@@ -171,6 +173,7 @@ class TwitterCard extends Module
             'moduleUrl' => $this->moduleUrl,
             'menuTabs' => $this->initNavigation(),
             'imageDir' => $baseUri.'modules/'.$this->name.'/views/img/',
+            'twitterUser' => Configuration::get(self::TWITTER_USER),
         ));
 
         $output = '';
@@ -349,7 +352,7 @@ class TwitterCard extends Module
                 ),
                 'submit' => array(
                     'title' => $this->l('Regenerate'),
-                    'icon' => 'process-icon-cogs'
+                    'icon' => 'process-icon-cogs',
                 ),
             ),
         );
@@ -442,14 +445,14 @@ class TwitterCard extends Module
                 'desc' => $this->l('Module settings'),
                 'href' => $this->moduleUrl.'&menu='.self::MENU_SETTINGS,
                 'active' => false,
-                'icon' => 'icon-gears'
+                'icon' => 'icon-gears',
             ),
             'info' => array(
                 'short' => $this->l('Help'),
                 'desc' => $this->l('Help'),
                 'href' => $this->moduleUrl.'&menu='.self::MENU_INFO,
                 'active' => false,
-                'icon' => 'icon-question'
+                'icon' => 'icon-question',
             ),
         );
 
@@ -508,9 +511,9 @@ class TwitterCard extends Module
      */
     protected function regenerateThumbnails($type = 'all', $deleteOldImages = false)
     {
-        $this->start_time = time();
+        $this->startTime = time();
         ini_set('max_execution_time', self::MAX_EXECUTION_TIME); // ini_set may be disabled, we need the real value
-        $this->max_execution_time = (int)ini_get('max_execution_time');
+        $this->maxExecutionTime = (int) ini_get('max_execution_time');
         ignore_user_abort(true);
         $languages = Language::getLanguages(false);
 
@@ -520,7 +523,7 @@ class TwitterCard extends Module
             array('type' => 'suppliers', 'dir' => _PS_SUPP_IMG_DIR_),
             array('type' => 'scenes', 'dir' => _PS_SCENE_IMG_DIR_),
             array('type' => 'products', 'dir' => _PS_PROD_IMG_DIR_),
-            array('type' => 'stores', 'dir' => _PS_STORE_IMG_DIR_)
+            array('type' => 'stores', 'dir' => _PS_STORE_IMG_DIR_),
         );
 
         // Launching generation process
@@ -543,9 +546,9 @@ class TwitterCard extends Module
             }
 
             if ($deleteOldImages) {
-                $this->_deleteOldImages($proc['dir'], $formats, ($proc['type'] == 'products' ? true : false));
+                $this->deleteOldImages($proc['dir'], $formats, ($proc['type'] == 'products' ? true : false));
             }
-            if (($return = $this->_regenerateNewImages($proc['dir'], $formats, ($proc['type'] == 'products' ? true : false))) === true) {
+            if (($return = $this->regenerateNewImages($proc['dir'], $formats, ($proc['type'] == 'products' ? true : false))) === true) {
                 if (!count($this->errors)) {
                     $this->errors[] = sprintf(Tools::displayError('Cannot write images for this type: %s. Please check the %s folder\'s writing permissions.'), $proc['type'], $proc['dir']);
                 }
@@ -553,12 +556,12 @@ class TwitterCard extends Module
                 $this->errors[] = Tools::displayError('Only part of the images have been regenerated. The server timed out before finishing.');
             } else {
                 if ($proc['type'] == 'products') {
-                    if ($this->_regenerateWatermark($proc['dir'], $formats) == 'timeout') {
+                    if ($this->regenerateWatermark($proc['dir'], $formats) == 'timeout') {
                         $this->errors[] = Tools::displayError('Server timed out. The watermark may not have been applied to all images.');
                     }
                 }
                 if (!count($this->errors)) {
-                    if ($this->_regenerateNoPictureImages($proc['dir'], $formats, $languages)) {
+                    if ($this->regenerateNoPictureImages($proc['dir'], $formats, $languages)) {
                         $this->errors[] = sprintf(Tools::displayError('Cannot write "No picture" image to (%s) images folder. Please check the folder\'s writing permissions.'), $proc['type']);
                     }
                 }
@@ -566,5 +569,209 @@ class TwitterCard extends Module
         }
 
         return (count($this->errors) > 0 ? false : true);
+    }
+
+    /**
+     * Delete resized image then regenerate new one with updated settings
+     *
+     * @param string $dir
+     * @param array  $type
+     * @param bool   $product
+     *
+     * @return bool
+     */
+    protected function deleteOldImages($dir, $type, $product = false)
+    {
+        if (!is_dir($dir)) {
+            return false;
+        }
+        $toDel = scandir($dir);
+
+        foreach ($toDel as $d) {
+            foreach ($type as $imageType) {
+                if (preg_match('/^[0-9]+\-'.($product ? '[0-9]+\-' : '').$imageType['name'].'\.jpg$/', $d)
+                    || (count($type) > 1 && preg_match('/^[0-9]+\-[_a-zA-Z0-9-]*\.jpg$/', $d))
+                    || preg_match('/^([[:lower:]]{2})\-default\-'.$imageType['name'].'\.jpg$/', $d)) {
+                    if (file_exists($dir.$d)) {
+                        unlink($dir.$d);
+                    }
+                }
+            }
+        }
+
+        // delete product images using new filesystem.
+        if ($product) {
+            $productsImages = Image::getAllImages();
+            foreach ($productsImages as $image) {
+                $imageObj = new Image($image['id_image']);
+                $imageObj->id_product = $image['id_product'];
+                if (file_exists($dir.$imageObj->getImgFolder())) {
+                    $toDel = scandir($dir.$imageObj->getImgFolder());
+                    foreach ($toDel as $d) {
+                        foreach ($type as $imageType) {
+                            if (preg_match('/^[0-9]+\-'.$imageType['name'].'\.jpg$/', $d) || (count($type) > 1 && preg_match('/^[0-9]+\-[_a-zA-Z0-9-]*\.jpg$/', $d))) {
+                                if (file_exists($dir.$imageObj->getImgFolder().$d)) {
+                                    unlink($dir.$imageObj->getImgFolder().$d);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * Regenerate images
+     *
+     * @param $dir
+     * @param $type
+     * @param bool $productsImages
+     * @return bool|string
+     */
+    protected function regenerateNewImages($dir, $type, $productsImages = false)
+    {
+        if (!is_dir($dir)) {
+            return false;
+        }
+
+        $generateHighDpiImages = (bool) Configuration::get('PS_HIGHT_DPI');
+
+        if (!$productsImages) {
+            $formattedThumbScene = ImageType::getFormatedName('thumb_scene');
+            $formattedMedium = ImageType::getFormatedName('medium');
+            foreach (scandir($dir) as $image) {
+                if (preg_match('/^[0-9]*\.jpg$/', $image)) {
+                    foreach ($type as $k => $imageType) {
+                        // Customizable writing dir
+                        $newDir = $dir;
+                        if ($imageType['name'] == $formattedThumbScene) {
+                            $newDir .= 'thumbs/';
+                        }
+                        if (!file_exists($newDir)) {
+                            continue;
+                        }
+
+                        if (($dir == _PS_CAT_IMG_DIR_) && ($imageType['name'] == $formattedMedium) && is_file(_PS_CAT_IMG_DIR_.str_replace('.', '_thumb.', $image))) {
+                            $image = str_replace('.', '_thumb.', $image);
+                        }
+
+                        if (!file_exists($newDir.substr($image, 0, -4).'-'.stripslashes($imageType['name']).'.jpg')) {
+                            if (!file_exists($dir.$image) || !filesize($dir.$image)) {
+                                $this->errors[] = sprintf(Tools::displayError('Source file does not exist or is empty (%s)'), $dir.$image);
+                            } elseif (!ImageManager::resize($dir.$image, $newDir.substr(str_replace('_thumb.', '.', $image), 0, -4).'-'.stripslashes($imageType['name']).'.jpg', (int) $imageType['width'], (int) $imageType['height'])) {
+                                $this->errors[] = sprintf(Tools::displayError('Failed to resize image file (%s)'), $dir.$image);
+                            }
+
+                            if ($generateHighDpiImages) {
+                                if (!ImageManager::resize($dir.$image, $newDir.substr($image, 0, -4).'-'.stripslashes($imageType['name']).'2x.jpg', (int) $imageType['width']*2, (int) $imageType['height']*2)) {
+                                    $this->errors[] = sprintf(Tools::displayError('Failed to resize image file to high resolution (%s)'), $dir.$image);
+                                }
+                            }
+                        }
+                        // stop 4 seconds before the timeout, just enough time to process the end of the page on a slow server
+                        if (time() - $this->startTime > $this->maxExecutionTime - 4) {
+                            return 'timeout';
+                        }
+                    }
+                }
+            }
+        } else {
+            foreach (Image::getAllImages() as $image) {
+                $imageObj = new Image($image['id_image']);
+                $existingImage = $dir.$imageObj->getExistingImgPath().'.jpg';
+                if (file_exists($existingImage) && filesize($existingImage)) {
+                    foreach ($type as $imageType) {
+                        if (!file_exists($dir.$imageObj->getExistingImgPath().'-'.stripslashes($imageType['name']).'.jpg')) {
+                            if (!ImageManager::resize($existingImage, $dir.$imageObj->getExistingImgPath().'-'.stripslashes($imageType['name']).'.jpg', (int) $imageType['width'], (int) $imageType['height'])) {
+                                $this->errors[] = sprintf(Tools::displayError('Original image is corrupt (%s) for product ID %2$d or bad permission on folder'), $existingImage, (int) $imageObj->id_product);
+                            }
+
+                            if ($generateHighDpiImages) {
+                                if (!ImageManager::resize($existingImage, $dir.$imageObj->getExistingImgPath().'-'.stripslashes($imageType['name']).'2x.jpg', (int) $imageType['width']*2, (int) $imageType['height']*2)) {
+                                    $this->errors[] = sprintf(Tools::displayError('Original image is corrupt (%s) for product ID %2$d or bad permission on folder'), $existingImage, (int) $imageObj->id_product);
+                                }
+                            }
+                        }
+                    }
+                } else {
+                    $this->errors[] = sprintf(Tools::displayError('Original image is missing or empty (%1$s) for product ID %2$d'), $existingImage, (int) $imageObj->id_product);
+                }
+                if (time() - $this->startTime > $this->maxExecutionTime - 4) { // stop 4 seconds before the tiemout, just enough time to process the end of the page on a slow server
+                    return 'timeout';
+                }
+            }
+        }
+
+        return (bool) count($this->errors);
+    }
+
+    /**
+     * Regenerate no-pictures images
+     *
+     * @param $dir
+     * @param $type
+     * @param $languages
+     * @return bool
+     */
+    protected function regenerateNoPictureImages($dir, $type, $languages)
+    {
+        $errors = false;
+        $generateHighDpiImages = (bool) Configuration::get('PS_HIGHT_DPI');
+
+        foreach ($type as $imageType) {
+            foreach ($languages as $language) {
+                $file = $dir.$language['iso_code'].'.jpg';
+                if (!file_exists($file)) {
+                    $file = _PS_PROD_IMG_DIR_.Language::getIsoById((int) Configuration::get('PS_LANG_DEFAULT')).'.jpg';
+                }
+                if (!file_exists($dir.$language['iso_code'].'-default-'.stripslashes($imageType['name']).'.jpg')) {
+                    if (!ImageManager::resize($file, $dir.$language['iso_code'].'-default-'.stripslashes($imageType['name']).'.jpg', (int) $imageType['width'], (int) $imageType['height'])) {
+                        $errors = true;
+                    }
+
+                    if ($generateHighDpiImages) {
+                        if (!ImageManager::resize($file, $dir.$language['iso_code'].'-default-'.stripslashes($imageType['name']).'2x.jpg', (int) $imageType['width']*2, (int) $imageType['height']*2)) {
+                            $errors = true;
+                        }
+                    }
+                }
+            }
+        }
+
+        return $errors;
+    }
+
+    /* Hook watermark optimization */
+    protected function regenerateWatermark($dir, $type = null)
+    {
+        $sql = new DbQuery();
+        $sql->select('m.`name`');
+        $sql->from('module', 'm');
+        $sql->leftJoin('hook_module', 'hm', 'm.`id_module` = hm.`id_module`');
+        $sql->leftJoin('hook', 'h', 'hm.`id_hook` = h.`id_hook`');
+        $sql->where('h.`name` = \'actionWatermark\'');
+        $sql->where('m.`active` = 1');
+
+        $result = Db::getInstance()->executeS($sql);
+
+        if ($result && count($result)) {
+            $productsImages = Image::getAllImages();
+            foreach ($productsImages as $image) {
+                $imageObj = new Image($image['id_image']);
+                if (file_exists($dir.$imageObj->getExistingImgPath().'.jpg')) {
+                    foreach ($result as $module) {
+                        $moduleInstance = Module::getInstanceByName($module['name']);
+                        if ($moduleInstance && is_callable(array($moduleInstance, 'hookActionWatermark'))) {
+                            call_user_func(array($moduleInstance, 'hookActionWatermark'), array('id_image' => $imageObj->id, 'id_product' => $imageObj->id_product, 'image_type' => $type));
+                        }
+
+                        if (time() - $this->startTime > $this->maxExecutionTime - 4) { // stop 4 seconds before the tiemout, just enough time to process the end of the page on a slow server
+                            return 'timeout';
+                        }
+                    }
+                }
+            }
+        }
     }
 }

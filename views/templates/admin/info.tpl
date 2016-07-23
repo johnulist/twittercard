@@ -31,7 +31,7 @@
                             {l s='StrikeHawk eCommerce, Inc. would like to thank you for your recent module purchase. Support is limited to your envato support package add-on.' mod='twittercard'}
                         </p>
                         <p>
-                            {l s='Module installation and configuration can be found in the video to the right and through our knowledgebase system link below the video. Any valid purchase with a valid envato support package may freely submit ticket issues in our support portal links found below. It will <strong>require</strong> an account registration prior to submitting your new issue.' mod='twittercard'}
+                            {l s='Module installation and configuration can be found in the video to the right and through our knowledgebase system link below the video. Any valid purchase with a valid envato support package may freely submit ticket issues in our support portal links found below. It will' mod='twittercard'} <strong>{l s='require' mod='twittercard'}</strong> {l s='an account registration prior to submitting your new issue.' mod='twittercard'}
                         </p>
                         <p>
                             <strong>{l s='Be sure to read the license agreement and legal disclaimer files found in your purchased zip archive file.' mod='twittercard'}</strong>
