@@ -41,14 +41,9 @@
                     </ul>
                 </div>
                 <div class="panel-footer">
-                    <ul class="list-inline">
-                        <li><a id="modal-222958" href="#modal-container-222958" role="button" class="btn btn-primary" data-toggle="modal">Newsletter Subscription</a>
-                        </li>
-                        <li>
-                            <a href="https://analytics.twitter.com/user/{$twitterUser|replace:'@':''|escape:'htmlall':'UTF-8'}/twitter_cards"
-                               target="_blank" title="Twitter Card Analytics" class="btn btn-primary pull-right">Twitter Analyics</a>
-                        </li>
-                    </ul>
+                    <a id="modal-222958" href="#modal-container-222958" role="button" class="btn btn-primary pull-left footer-btn" data-toggle="modal">Newsletter Subscription</a>
+                    <a href="https://analytics.twitter.com/user/{$twitterUser|replace:'@':''|escape:'htmlall':'UTF-8'}/twitter_cards"
+                               target="_blank" title="Twitter Card Analytics" class="btn btn-primary pull-left footer-btn">Twitter Analyics</a>
                 </div>
                 <div class="modal fade" id="modal-container-222958" role="dialog" aria-labelledby="myModalLabel"
                      aria-hidden="true">
