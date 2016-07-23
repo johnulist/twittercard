@@ -51,9 +51,16 @@
                             </li>
                         </ul>
                     </div>
-                    <a id="modal-222958" href="#modal-container-222958" role="button" class="btn btn-primary"
-                       data-toggle="modal">Newsletter Subscription</a>
-
+                    <div class="panel-footer">
+                        <ul class="list-inline">
+                            <li><a id="modal-222958" href="#modal-container-222958" role="button" class="btn btn-primary" data-toggle="modal">Newsletter Subscription</a>
+                            </li>
+                            <li>
+                                <a href="https://analytics.twitter.com/user/{$twitterUser|replace:'@':''|escape:'htmlall':'UTF-8'}/twitter_cards"
+                                   target="_blank" title="Twitter Card Analytics" class="btn btn-primary pull-right">Twitter Analyics</a>
+                            </li>
+                        </ul>
+                    </div>
                     <div class="modal fade" id="modal-container-222958" role="dialog" aria-labelledby="myModalLabel"
                          aria-hidden="true">
                         <div class="modal-dialog">
@@ -220,10 +227,10 @@
                                 {l s='Installation Tutorial' mod='twittercard'}
                             </h4>
                             <div align="center">
-                            <iframe align="center" class="embed-responsive-item" width="640" height="360"
-                                    src="https://www.youtube-nocookie.com/embed/x6PVglpRnV4?rel=0&amp;showinfo=0"
-                                    frameborder="0" allowfullscreen>
-                            </iframe>
+                                <iframe align="center" class="embed-responsive-item" width="640" height="360"
+                                        src="https://www.youtube-nocookie.com/embed/x6PVglpRnV4?rel=0&amp;showinfo=0"
+                                        frameborder="0" allowfullscreen>
+                                </iframe>
                             </div>
                         </div>
                         <div class="row">
