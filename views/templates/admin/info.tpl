@@ -166,57 +166,29 @@
                         </ol>
                         <div class="carousel-inner">
                             <div class="item active">
-                                <img alt="Carousel Bootstrap First"
-                                     src="{$imageDir}tw-before.jpg"/>
-                                {*<div class="carousel-caption">*}
-                                {*<h4>*}
-                                {*First Thumbnail label*}
-                                {*</h4>*}
-                                {*<p>*}
-                                {*Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi*}
-                                {*porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.*}
-                                {*</p>*}
-                                {*</div>*}
+                                <img alt="Carousel Bootstrap First" src="{$imageDir}tw-before.jpg"/>
                             </div>
                             <div class="item">
-                                <img alt="Carousel Bootstrap Second"
-                                     src="{$imageDir}tw-after.jpg"/>
-                                <div class="carousel-caption">
-                                    <h4>
-                                        Second Thumbnail label
-                                    </h4>
-                                    <p>
-                                        Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi
-                                        porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.
-                                    </p>
-                                </div>
+                                <img alt="Carousel Bootstrap Second" src="{$imageDir}tw-after.jpg"/>
                             </div>
                             <div class="item">
-                                <img alt="Carousel Bootstrap Third"
-                                     src="http://lorempixel.com/output/sports-q-c-1600-500-3.jpg"/>
-                                <div class="carousel-caption">
-                                    <h4>
-                                        Third Thumbnail label
-                                    </h4>
-                                    <p>
-                                        Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi
-                                        porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.
-                                    </p>
-                                </div>
+                                <img alt="Carousel Bootstrap Third" src="{$imageDir}product-twitter.jpg"/>
                             </div>
                         </div>
-                        <a class="left carousel-control" href="#carousel-151629" data-slide="prev"><span
-                                    class="icon-chevron-left"></span></a> <a class="right carousel-control"
-                                                                             href="#carousel-151629" data-slide="next"><span
-                                    class="icon-chevron-right"></span></a>
+                        <a class="left carousel-control" href="#carousel-151629" data-slide="prev">
+                            <span class="icon-chevron-left"></span>
+                        </a>
+                        <a class="right carousel-control" href="#carousel-151629" data-slide="next">
+                            <span class="icon-chevron-right"></span>
+                        </a>
                     </div>
-                </div></div>
+                </div>
+            </div>
             <div class="modal fade" id="modal-container-98849" role="dialog" aria-labelledby="myModalLabel"
                  aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
                                 ×
                             </button>
