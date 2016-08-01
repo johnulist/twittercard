@@ -1,6 +1,6 @@
 {
-  "name": "mdstripe",
-  "version": "1.0.4",
+  "name": "twittercard",
+  "version": "1.0.7",
   "description": "",
   "main": "Gruntfile.js",
   "scripts": {
@@ -8,14 +8,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/firstred/mdstripe"
+    "url": "https://github.com/firstred/twittercard"
   },
   "keywords": [
     "stripe"
   ],
   "author": "Michael Dekker",
   "license": "MIT",
-  "homepage": "https://github.com/firstred/mdstrie#readme",
+  "homepage": "https://github.com/firstred/twittercard#readme",
   "devDependencies": {
     "grunt": "^0.4.5",
     "grunt-cli": "^0.1.13",

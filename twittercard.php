@@ -485,7 +485,7 @@ class TwitterCard extends Module
     protected function postProcess()
     {
         $success = true;
-        foreach ($this->getFormValues() as $key => $value) {
+        foreach (array_keys($this->getFormValues()) as $key) {
             if (Tools::isSubmit($key)) {
                 if (!Configuration::updateValue($key, Tools::getValue($key))) {
                     $success = false;
@@ -550,26 +550,26 @@ class TwitterCard extends Module
                 $this->deleteOldImages($proc['dir'], $formats, ($proc['type'] == 'products' ? true : false));
             }
             if (($return = $this->regenerateNewImages($proc['dir'], $formats, ($proc['type'] == 'products' ? true : false))) === true) {
-                if (!count($this->errors)) {
-                    $this->errors[] = sprintf(Tools::displayError('Cannot write images for this type: %s. Please check the %s folder\'s writing permissions.'), $proc['type'], $proc['dir']);
+                if (!count($this->context->controller->errors)) {
+                    $this->context->controller->errors[] = sprintf(Tools::displayError('Cannot write images for this type: %s. Please check the %s folder\'s writing permissions.'), $proc['type'], $proc['dir']);
                 }
             } elseif ($return == 'timeout') {
-                $this->errors[] = Tools::displayError('Only part of the images have been regenerated. The server timed out before finishing.');
+                $this->context->controller->errors[] = Tools::displayError('Only part of the images have been regenerated. The server timed out before finishing.');
             } else {
                 if ($proc['type'] == 'products') {
                     if ($this->regenerateWatermark($proc['dir'], $formats) == 'timeout') {
-                        $this->errors[] = Tools::displayError('Server timed out. The watermark may not have been applied to all images.');
+                        $this->context->controller->errors[] = $this->l('Server timed out. The watermark may not have been applied to all images.');
                     }
                 }
-                if (!count($this->errors)) {
+                if (!count($this->context->controller->errors)) {
                     if ($this->regenerateNoPictureImages($proc['dir'], $formats, $languages)) {
-                        $this->errors[] = sprintf(Tools::displayError('Cannot write "No picture" image to (%s) images folder. Please check the folder\'s writing permissions.'), $proc['type']);
+                        $this->context->controller->errors[] = sprintf('Cannot write "No picture" image to (%s) images folder. Please check the folder\'s writing permissions.', $proc['type']);
                     }
                 }
             }
         }
 
-        return (count($this->errors) > 0 ? false : true);
+        return (count($this->context->controller->errors) > 0 ? false : true);
     }
 
     /**
@@ -643,7 +643,7 @@ class TwitterCard extends Module
             $formattedMedium = ImageType::getFormatedName('medium');
             foreach (scandir($dir) as $image) {
                 if (preg_match('/^[0-9]*\.jpg$/', $image)) {
-                    foreach ($type as $k => $imageType) {
+                    foreach ($type as $imageType) {
                         // Customizable writing dir
                         $newDir = $dir;
                         if ($imageType['name'] == $formattedThumbScene) {
@@ -657,16 +657,16 @@ class TwitterCard extends Module
                             $image = str_replace('.', '_thumb.', $image);
                         }
 
-                        if (!file_exists($newDir.substr($image, 0, -4).'-'.stripslashes($imageType['name']).'.jpg')) {
+                        if (!file_exists($newDir.Tools::substr($image, 0, -4).'-'.Tools::stripslashes($imageType['name']).'.jpg')) {
                             if (!file_exists($dir.$image) || !filesize($dir.$image)) {
-                                $this->errors[] = sprintf(Tools::displayError('Source file does not exist or is empty (%s)'), $dir.$image);
-                            } elseif (!ImageManager::resize($dir.$image, $newDir.substr(str_replace('_thumb.', '.', $image), 0, -4).'-'.stripslashes($imageType['name']).'.jpg', (int) $imageType['width'], (int) $imageType['height'])) {
-                                $this->errors[] = sprintf(Tools::displayError('Failed to resize image file (%s)'), $dir.$image);
+                                $this->context->controller->errors[] = sprintf('Source file does not exist or is empty (%s)', $dir.$image);
+                            } elseif (!ImageManager::resize($dir.$image, $newDir.Tools::substr(str_replace('_thumb.', '.', $image), 0, -4).'-'.Tools::stripslashes($imageType['name']).'.jpg', (int) $imageType['width'], (int) $imageType['height'])) {
+                                $this->context->controller->errors[] = sprintf('Failed to resize image file (%s)', $dir.$image);
                             }
 
                             if ($generateHighDpiImages) {
-                                if (!ImageManager::resize($dir.$image, $newDir.substr($image, 0, -4).'-'.stripslashes($imageType['name']).'2x.jpg', (int) $imageType['width']*2, (int) $imageType['height']*2)) {
-                                    $this->errors[] = sprintf(Tools::displayError('Failed to resize image file to high resolution (%s)'), $dir.$image);
+                                if (!ImageManager::resize($dir.$image, $newDir.Tools::substr($image, 0, -4).'-'.Tools::stripslashes($imageType['name']).'2x.jpg', (int) $imageType['width']*2, (int) $imageType['height']*2)) {
+                                    $this->context->controller->errors[] = sprintf('Failed to resize image file to high resolution (%s)', $dir.$image);
                                 }
                             }
                         }
@@ -683,20 +683,20 @@ class TwitterCard extends Module
                 $existingImage = $dir.$imageObj->getExistingImgPath().'.jpg';
                 if (file_exists($existingImage) && filesize($existingImage)) {
                     foreach ($type as $imageType) {
-                        if (!file_exists($dir.$imageObj->getExistingImgPath().'-'.stripslashes($imageType['name']).'.jpg')) {
-                            if (!ImageManager::resize($existingImage, $dir.$imageObj->getExistingImgPath().'-'.stripslashes($imageType['name']).'.jpg', (int) $imageType['width'], (int) $imageType['height'])) {
-                                $this->errors[] = sprintf(Tools::displayError('Original image is corrupt (%s) for product ID %2$d or bad permission on folder'), $existingImage, (int) $imageObj->id_product);
+                        if (!file_exists($dir.$imageObj->getExistingImgPath().'-'.Tools::stripslashes($imageType['name']).'.jpg')) {
+                            if (!ImageManager::resize($existingImage, $dir.$imageObj->getExistingImgPath().'-'.Tools::stripslashes($imageType['name']).'.jpg', (int) $imageType['width'], (int) $imageType['height'])) {
+                                $this->context->controller->errors[] = sprintf('Original image is corrupt (%s) for product ID %2$d or bad permission on folder', $existingImage, (int) $imageObj->id_product);
                             }
 
                             if ($generateHighDpiImages) {
-                                if (!ImageManager::resize($existingImage, $dir.$imageObj->getExistingImgPath().'-'.stripslashes($imageType['name']).'2x.jpg', (int) $imageType['width']*2, (int) $imageType['height']*2)) {
-                                    $this->errors[] = sprintf(Tools::displayError('Original image is corrupt (%s) for product ID %2$d or bad permission on folder'), $existingImage, (int) $imageObj->id_product);
+                                if (!ImageManager::resize($existingImage, $dir.$imageObj->getExistingImgPath().'-'.Tools::stripslashes($imageType['name']).'2x.jpg', (int) $imageType['width']*2, (int) $imageType['height']*2)) {
+                                    $this->context->controller->errors[] = sprintf('Original image is corrupt (%s) for product ID %2$d or bad permission on folder', $existingImage, (int) $imageObj->id_product);
                                 }
                             }
                         }
                     }
                 } else {
-                    $this->errors[] = sprintf(Tools::displayError('Original image is missing or empty (%1$s) for product ID %2$d'), $existingImage, (int) $imageObj->id_product);
+                    $this->context->controller->errors[] = sprintf('Original image is missing or empty (%1$s) for product ID %2$d', $existingImage, (int) $imageObj->id_product);
                 }
                 if (time() - $this->startTime > $this->maxExecutionTime - 4) { // stop 4 seconds before the tiemout, just enough time to process the end of the page on a slow server
                     return 'timeout';
@@ -704,7 +704,7 @@ class TwitterCard extends Module
             }
         }
 
-        return (bool) count($this->errors);
+        return (bool) count($this->context->controller->errors);
     }
 
     /**
@@ -726,13 +726,13 @@ class TwitterCard extends Module
                 if (!file_exists($file)) {
                     $file = _PS_PROD_IMG_DIR_.Language::getIsoById((int) Configuration::get('PS_LANG_DEFAULT')).'.jpg';
                 }
-                if (!file_exists($dir.$language['iso_code'].'-default-'.stripslashes($imageType['name']).'.jpg')) {
-                    if (!ImageManager::resize($file, $dir.$language['iso_code'].'-default-'.stripslashes($imageType['name']).'.jpg', (int) $imageType['width'], (int) $imageType['height'])) {
+                if (!file_exists($dir.$language['iso_code'].'-default-'.Tools::stripslashes($imageType['name']).'.jpg')) {
+                    if (!ImageManager::resize($file, $dir.$language['iso_code'].'-default-'.Tools::stripslashes($imageType['name']).'.jpg', (int) $imageType['width'], (int) $imageType['height'])) {
                         $errors = true;
                     }
 
                     if ($generateHighDpiImages) {
-                        if (!ImageManager::resize($file, $dir.$language['iso_code'].'-default-'.stripslashes($imageType['name']).'2x.jpg', (int) $imageType['width']*2, (int) $imageType['height']*2)) {
+                        if (!ImageManager::resize($file, $dir.$language['iso_code'].'-default-'.Tools::stripslashes($imageType['name']).'2x.jpg', (int) $imageType['width']*2, (int) $imageType['height']*2)) {
                             $errors = true;
                         }
                     }

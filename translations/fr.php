@@ -24,5 +24,5 @@ $_MODULE['<{twittercard}prestashop>twittercard_1a11db3d2781e8ee1401eab17b296b6a'
 $_MODULE['<{twittercard}prestashop>twittercard_a82be0f551b8708bc08eb33cd9ded0cf'] = 'Information';
 $_MODULE['<{twittercard}prestashop>twittercard_082c7196a2d6e0115c4a866ebf8d6c8f'] = 'Formulaire mis à jour avec succès';
 $_MODULE['<{twittercard}prestashop>twittercard_e98f7437066e499e56737c85f2912596'] = 'Il y avait un problème lors de la mise à jour de la configuration';
-$_MODULE['<{twittercard}prestashop>info_4eff3533d25192c920a7f20dbeebd818'] = 'Twitter R�sum� Carte w / Image Grand';
-$_MODULE['<{twittercard}prestashop>info_77abd48d0a4b2599252746283cf415bd'] = 'Ajoute Twitter R�sum� Carte avec une grande image sur votre site';
+$_MODULE['<{twittercard}prestashop>info_4eff3533d25192c920a7f20dbeebd818'] = 'Twitter Résumé Carte w / Image Grand';
+$_MODULE['<{twittercard}prestashop>info_77abd48d0a4b2599252746283cf415bd'] = 'Ajoute Twitter Résumé Carte avec une grande image sur votre site';

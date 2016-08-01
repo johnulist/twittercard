@@ -11,5 +11,5 @@ $_MODULE['<{twittercard}prestashop>twittercard_95eec51b8dbfc3be19a025781e5c52fc'
 $_MODULE['<{twittercard}prestashop>twittercard_f5f0ec7f83db896649cad1229aa983e4'] = 'Twitter-Namen (ex . @strikehawkecomm )';
 $_MODULE['<{twittercard}prestashop>twittercard_bfeb95b6fff23fe16dd1dd231cadb451'] = 'Startseite Seitentitel';
 $_MODULE['<{twittercard}prestashop>twittercard_962a046fc15e89bcc4c3fb24060a2f09'] = 'Startseite Beschreibung ( Limit : 200 Zeichen )';
-$_MODULE['<{twittercard}prestashop>info_4eff3533d25192c920a7f20dbeebd818'] = 'Twitter Zusammenfassung Karte w / Großes Bild';
-$_MODULE['<{twittercard}prestashop>info_77abd48d0a4b2599252746283cf415bd'] = 'Fügt Twitter Zusammenfassung Karte mit großen Bild auf Ihre Website';
+$_MODULE['<{twittercard}prestashop>info_4eff3533d25192c920a7f20dbeebd818'] = 'Twitter Zusammenfassung Karte w / Grosses Bild';
+$_MODULE['<{twittercard}prestashop>info_77abd48d0a4b2599252746283cf415bd'] = 'FÃ¼gt Twitter Zusammenfassung Karte mit grossen Bild auf Ihre Website';

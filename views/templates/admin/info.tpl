@@ -182,13 +182,13 @@
                     </ol>
                     <div class="carousel-inner">
                         <div class="item active">
-                            <img alt="Carousel Bootstrap First" src="{$imageDir}tw-before.jpg"/>
+                            <img alt="Carousel Bootstrap First" src="{$imageDir|escape:'htmlall':'UTF-8'}tw-before.jpg" />
                         </div>
                         <div class="item">
-                            <img alt="Carousel Bootstrap Second" src="{$imageDir}tw-after.jpg"/>
+                            <img alt="Carousel Bootstrap Second" src="{$imageDir|escape:'htmlall':'UTF-8'}tw-after.jpg" />
                         </div>
                         <div class="item">
-                            <img alt="Carousel Bootstrap Third" src="{$imageDir}product-twitter.jpg"/>
+                            <img alt="Carousel Bootstrap Third" src="{$imageDir|escape:'htmlall':'UTF-8'}product-twitter.jpg" />
                         </div>
                     </div>
                     <a class="left carousel-control" href="#carousel-151629" data-slide="prev">
