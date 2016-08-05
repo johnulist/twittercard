@@ -43,7 +43,7 @@ class TwitterCard extends Module
     {
         $this->name = 'twittercard';
         $this->tab = 'front_office_features';
-        $this->version = '1.0.7';
+        $this->version = '1.0.8';
         $this->author = 'StrikeHawk eCommerce, Inc.';
         $this->need_instance = 0;
 
