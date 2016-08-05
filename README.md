@@ -1,32 +1,21 @@
-# Stripe
-![Stripe](/views/img/stripebtnlogo.png)
+# Twitter Summary Card With Large Image #
+----------
+## PrestaShop Shopping Cart Module
+![Twitter Summary Card With Large Image](/views/img/tw-after.jpg)
 
-Accept Payments with Stripe in PrestaShop with this free and open source module.
-
+Enhance PrestaShop Twitter social sharing features with a large summary image card rather than the regular Summary Card with small image.
 ## Features
-### Mission
-The aim of this module is to obsolete all existing available modules for Stripe through its simplicity, security and speed.  
-Contributions are more than welcome!
 
 ### Current features
-- Process Credit Card, Alipay and Bitcoin (USD only) payments with Stripe
-- Process refunds received by webhooks:
-    - Partial refund
-    - Full refund
-    - Generate credit slip
-- Refund from Back Office Order page
-    - Partial refund
-    - Full refund
-- View transactions on Back Office Order Page
-- View all transactions on the module configuration page
-- Uses Stripe's Checkout form to stay up to date with the latest version
-- Supports the Advanced checkout page of the Advanced EU Compliance module
-- Supports the new `paymentOptions` hook of PrestaShop 1.7
-- Supports the One Page Checkout module of PresTeamShop
+- Modifies default social sharing behavior for twitter card
+- Links to your Twitter Card Analytics
 
-### Roadmap
-The issue page will give you a good overview of the current roadmap and priorities:
-https://github.com/firstred/mdstripe/issues
+### Road Map
+The issue page will give you a good overview of the current road map and priorities:
+https://github.com/StrikeHawk-ecommerce/twittercard/milestones
+
+### Contributing
+You may fork or repository and create features and fixes on your own branch and submit a pull request for review. You should follow http://doc.prestashop.com/display/PS16/Coding+Standards coding standards. Make sure to create an issue before submitting code and reference the issue in your commit message.
 
 ## Installation
 ### Module installation
@@ -43,7 +32,7 @@ This module has been tested with these versions:
 - `1.6.1.5`
 
 ## Minimum requirements
-- PHP 5.4
+- PHP 5.6
 - TLSv1.2 enabled cURL extension for PHP
 
 ## License
