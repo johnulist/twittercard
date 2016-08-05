@@ -149,7 +149,6 @@ class TwitterCard extends Module
      */
     public function getContent()
     {
-        ddd($this->local_path.'/views/js/v1-config.js');
         $this->context->controller->addJquery();
         if (version_compare(_PS_VERSION_, '1.6.0.0', '>=')) {
             $this->context->controller->addJS($this->local_path.'views/js/v1-config.js');
@@ -625,8 +624,8 @@ class TwitterCard extends Module
     /**
      * Regenerate images
      *
-     * @param $dir
-     * @param $type
+     * @param string $dir          Directory
+     * @param string $type         Image type
      * @param bool $productsImages
      * @return bool|string
      */
@@ -710,9 +709,9 @@ class TwitterCard extends Module
     /**
      * Regenerate no-pictures images
      *
-     * @param $dir
-     * @param $type
-     * @param $languages
+     * @param string $dir       Directory
+     * @param string $type      Image type
+     * @param array  $languages Languages
      * @return bool
      */
     protected function regenerateNoPictureImages($dir, $type, $languages)
